@@ -2,7 +2,7 @@
   "name": "tanky",
   "license": "MIT",
   "scripts": {
-    "server": "node index.js",
+    "server": "node build/server/index.js",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
