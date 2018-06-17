@@ -1,10 +1,10 @@
 import express from 'express';
 import http from "http";
-import socket from "socket.io";
+import socketio from "socket.io";
 
 var app = express();
 var server = new http.Server(app);
-var io = socket(server);
+var io = socketio(server);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
