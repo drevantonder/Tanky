@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/node
 
+### Build ###
+/build
+
 ### Node ###
 # Logs
 logs
