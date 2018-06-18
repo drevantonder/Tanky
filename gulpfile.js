@@ -20,7 +20,11 @@ gulp.task('build:client:webpack', function() {
 
 gulp.task('build:client',['build:client:webpack']);
 
+gulp.task('run:server', ['build:server', 'build:client'], function(){
+  console.log('Running Server...');
+  return run('yarn run server').exec();
+});
 
-gulp.task('default', ['build:client', 'build:server'], function() {
+gulp.task('default', ['build:client', 'build:server', 'run:server'], function() {
   console.log('Done');
 });

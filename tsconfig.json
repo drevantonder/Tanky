@@ -9,6 +9,6 @@
     "src/server/**/*.ts"
   ],
   "exclude": [
-      "src/client"
+    "src/client"
   ]
 }
