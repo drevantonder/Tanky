@@ -19,6 +19,7 @@ gulp.task('run:server', ['build:server', 'build:client'], () => {
 
 gulp.task('default', ['build:client', 'build:server', 'run:server'], () => console.log('Done'));
 
-gulp.task('watch', ['default'], () => {
-  gulp.watch("src/**/*", ['default'])
+gulp.task('watch', () => {
+  gulp.watch("src/server/**/*", ['run:server'])
+  gulp.watch("src/client/**/*", ['run:server'])
 })
