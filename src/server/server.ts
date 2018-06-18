@@ -7,7 +7,7 @@ const app = express();
 const server = new http.Server(app);
 const io = socketio(server);
 
-const clientPath = path.join(process.cwd(), "build/client/dist")
+const clientPath = path.join(process.cwd(), "dist/")
 
 app.use(express.static(clientPath));
 

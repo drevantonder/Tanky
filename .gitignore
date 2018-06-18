@@ -1,6 +1,7 @@
 # Created by https://www.gitignore.io/api/node
 
-### Build ###
+### Dist & Build ###
+/dist
 /build
 
 ### Node ###
