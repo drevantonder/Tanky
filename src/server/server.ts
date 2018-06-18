@@ -23,7 +23,7 @@ export default class Server {
           console.log("user disconnected");
         });
       
-      socket.emit('hello', 'can you hear me?', 1, 2, 'abc');
+      socket.emit('hello', 'can you hear me?');
     });
     
     server.listen(3000, () => {
