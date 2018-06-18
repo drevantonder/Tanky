@@ -26,7 +26,7 @@ export default class Game extends Phaser.Game {
         };
 
         super(config)
-        window.addEventListener('resize', this.onResize);
+        window.addEventListener('resize', () => this.onResize());
     }
 
     onResize(){
