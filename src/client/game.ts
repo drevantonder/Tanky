@@ -18,12 +18,18 @@ class Scene extends Phaser.Scene {
 export default class Game extends Phaser.Game {
     constructor() {
         var config = {
-            width: 1000,
-            height: 1000,
             type: Phaser.AUTO,
-            scene: [Scene]
+            width: window.innerWidth,
+            height: window.innerHeight,
+            scene: [Scene],
+            autofocus: true
         };
 
         super(config)
+        window.addEventListener('resize', this.onResize);
+    }
+
+    onResize(){
+        this.resize(window.innerWidth, window.innerHeight)
     }
 }
