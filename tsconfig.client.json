@@ -1,0 +1,16 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "rootDir": "src/client",
+    "outDir": "build/client/pre-webpack",
+    "target": "es6",
+    "module": "es6"
+  },
+  "include": [
+    "src/client/*.ts",
+    "src/client/**/*.ts"
+  ],
+  "exclude": [
+    "src/server"
+  ]
+}

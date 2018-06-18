@@ -1,0 +1,14 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "rootDir": "src/server",
+    "outDir": "build/server"
+  },
+  "include": [
+    "src/server/*.ts",
+    "src/server/**/*.ts"
+  ],
+  "exclude": [
+      "src/client"
+  ]
+}
