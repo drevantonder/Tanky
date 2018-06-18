@@ -12,3 +12,7 @@ One very simple command (using gulp 😉):
 gulp
 ```
 This will build the server and client and start the server.
+
+## Attribution
+
+- Kenney (kenney.nl) for assets
