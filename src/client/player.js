@@ -9,19 +9,19 @@ export default class Player {
     }
 
     update(){
-        if(this.controls.left && this.controls.left.isDown) {
-            this.tank.angle -= 2;
+        if(this.controls.left.isDown) {
+            this.tank.rotateLeft();
         }
 
-        if(this.controls.right && this.controls.right.isDown) {
-            this.tank.angle += 2;
+        if(this.controls.right.isDown) {
+            this.tank.rotateRight();
         }
 
-        if(this.controls.down && this.controls.down.isDown) {
+        if(this.controls.down.isDown) {
             this.tank.y += 20;
         }
 
-        if(this.controls.up && this.controls.up.isDown) {
+        if(this.controls.up.isDown) {
             this.tank.y -= 20;
         }
     }
