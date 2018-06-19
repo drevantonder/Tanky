@@ -21,3 +21,5 @@ export default class Game extends Phaser.Game {
         this.resize(window.innerWidth, window.innerHeight)
     }
 }
+
+
