@@ -1,19 +1,7 @@
 ///<reference path="phaser.d.ts" />
 import Phaser from "phaser";
 
-class Scene extends Phaser.Scene {
-    constructor(){
-        super('main')
-    }
-
-    preload() {
-        this.load.image('tank', 'assets/tank_red.png');
-    }
-
-    create() {
-        this.add.image(400, 300, 'tank');
-    }
-}
+import GameScene from "./gameScene";
 
 export default class Game extends Phaser.Game {
     constructor() {
@@ -21,7 +9,7 @@ export default class Game extends Phaser.Game {
             type: Phaser.AUTO,
             width: window.innerWidth,
             height: window.innerHeight,
-            scene: [Scene],
+            scene: [GameScene],
             autofocus: true
         };
 
