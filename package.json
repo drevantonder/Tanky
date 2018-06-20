@@ -9,7 +9,9 @@
     "fix": "gts fix",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "posttest": "npm run check",
+    "watch:client": "npx webpack --watch",
+    "watch:server": "nodemon"
   },
   "dependencies": {
     "eslint": "4.19.1",
@@ -24,11 +26,13 @@
     "@types/socket.io-client": "1.4.32",
     "copy-webpack-plugin": "4.5.1",
     "gts": "^0.6.0",
-    "gulp": "3.9.1",
-    "gulp-run": "1.7.1",
-    "ts-loader": "4.4.1",
     "typescript": "~2.8.0",
     "webpack": "4.12.0",
     "webpack-cli": "3.0.8"
+  },
+  "nodemonConfig": {
+    "watch": ["src/server"],
+    "exec": "yarn compile && yarn server",
+    "ext": "*.ts"
   }
 }
