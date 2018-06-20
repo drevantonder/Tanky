@@ -1,6 +1,14 @@
 module.exports = class GameObject {
-  getData(){
+  get data(){
     return {}
+  }
+
+  getData(){
+    if (super.getData) {
+      return Object.assign(this.data, super.getData())
+    } else {
+      return this.data
+    }
   }
 
   toJSON() {
