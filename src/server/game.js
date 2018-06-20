@@ -8,7 +8,7 @@ module.exports = class Game extends GameObject {
   }
 
   newPlayer(){
-    let newPlayer = Player()
+    let newPlayer = new Player()
     this.players.push(newPlayer)
     return newPlayer
   }
