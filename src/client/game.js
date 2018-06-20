@@ -1,7 +1,7 @@
 ///<reference path="phaser.d.ts" />
-import Phaser from "phaser";
+import Phaser from 'phaser'
 
-import GameScene from "./gameScene";
+import GameScene from './gameScene'
 
 export default class Game extends Phaser.Game {
     constructor() {
@@ -11,10 +11,10 @@ export default class Game extends Phaser.Game {
             height: window.innerHeight,
             scene: [GameScene],
             autofocus: true
-        };
+        }
 
         super(config)
-        window.addEventListener('resize', () => this.onResize());
+        window.addEventListener('resize', () => this.onResize())
     }
 
     onResize(){
