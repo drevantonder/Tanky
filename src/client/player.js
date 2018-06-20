@@ -18,11 +18,11 @@ export default class Player {
         }
 
         if(this.controls.down.isDown) {
-            this.tank.y += 20;
+            this.tank.forward();
         }
 
         if(this.controls.up.isDown) {
-            this.tank.y -= 20;
+            this.tank.backward();
         }
     }
 }
