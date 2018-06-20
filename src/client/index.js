@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 var socket = io()
 
-socket.on('hello', (data) => {
+socket.on('new-player', (data) => {
   console.log(data)
 })
 

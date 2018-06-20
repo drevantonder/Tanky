@@ -12,4 +12,15 @@ module.exports = class Game extends GameObject {
     this.players.push(newPlayer)
     return newPlayer
   }
+
+  getData(){
+    let players = []
+    for (let i = 0; i < this.players.length; i++) {
+      players.push(this.players[i].toJSON())
+    }
+
+    return {
+      players: players
+    }
+  }
 }

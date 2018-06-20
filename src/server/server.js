@@ -9,22 +9,31 @@ const io = socketio(server)
 
 const clientPath = path.join(process.cwd(), 'dist/')
 
+const Game = require('./game')
+
 app.use(express.static(clientPath))
 
 module.exports = class Server {
-    start () {
-        app.get('/', (req, res) => {
-            res.sendFile('index.html')
-        })
-        io.on('connection', (socket) => {
-            console.log('a user connected')
-            socket.on('disconnect', () => {
-                console.log('user disconnected')
-            })
-            socket.emit('hello', 'can you hear me?')
-        })
-        server.listen(3000, () => {
-            console.log('listening on *:3000')
-        })
-    }
+  constructor(){
+    this.game = new Game()
+
+    this.start()
+  }
+
+  start () {
+    app.get('/', (req, res) => {
+      res.sendFile('index.html')
+    })
+    io.on('connection', (socket) => {
+      console.log('a user connected')
+      socket.on('disconnect', () => {
+        console.log('user disconnected')
+      })
+
+      socket.emit('new-player', this.game.newPlayer().toJSON())
+    })
+    server.listen(3000, () => {
+      console.log('listening on *:3000')
+    })
+  }
 }
