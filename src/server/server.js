@@ -9,7 +9,7 @@ const io = socketio(server)
 
 const clientPath = path.join(process.cwd(), 'dist/')
 
-const Game = require('./game')
+const Game = require('../imports/game')
 
 app.use(express.static(clientPath))
 
