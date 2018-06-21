@@ -7,8 +7,14 @@ module.exports = class Game extends GameObject {
     this.players = []    
   }
 
-  newPlayer(){
-    let newPlayer = new Player()
+  newPlayer(data){
+    let newPlayer
+    if(data){
+      newPlayer = Player.fromJSON(data)
+    } else {
+      newPlayer = new Player()
+    }
+    
     this.players.push(newPlayer)
     return newPlayer
   }

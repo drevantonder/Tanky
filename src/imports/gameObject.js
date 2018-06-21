@@ -15,8 +15,8 @@ module.exports = class GameObject {
     return JSON.stringify(this.getData())
   }
 
-  fromJSON(json){
+  static fromJSON(json){
     var data = JSON.parse(json)
-    return new this.constructor(...data)
+    return new this(data)
   }
 }

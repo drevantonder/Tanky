@@ -4,10 +4,10 @@ const GameObject = require('./gameObject')
 const utils = require('./utils')
 
 module.exports = class Player extends GameObject {
-  constructor(){
+  constructor(data = undefined){
     super()
-    this.tank = new Tank()
-    this.uid = utils.getUID()
+    this.tank = new Tank(utils.readData(data, 'tank'))
+    this.uid = utils.readData(data, 'uid', utils.getUID)
   }
 
   get data(){
