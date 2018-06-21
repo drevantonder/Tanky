@@ -7,11 +7,19 @@ Each player will control a tank on the battlefield. The players will drive their
 
 ## Running the server
 
-One very simple command (using gulp 😉): 
+One very simple command: 
 ```shell
-gulp
+yarn watch:server
 ```
-This will build the server and client and start the server.
+This will start the server and restart when any changes are made to the server.
+
+## Building the client
+
+One command: 
+```shell
+yarn watch:client
+```
+This will use webpack and watch the client src and rebuild on any changes
 
 ## Attribution
 

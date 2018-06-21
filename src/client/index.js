@@ -1,10 +1,3 @@
-import io from 'socket.io-client';
-var socket = io();
+import Client from './client'
 
-socket.on('hello', (data) => {
-    console.log(data);
-});
-
-import Game from "./game";
-
-new Game();
+new Client()

@@ -2,22 +2,15 @@
   "name": "tanky",
   "license": "MIT",
   "scripts": {
-    "server": "node build/index.js",
-    "check": "gts check",
-    "clean": "gts clean",
-    "compile": "tsc --p tsconfig.json",
-    "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run check",
+    "server": "node src/server/index.js",
     "watch:client": "npx webpack --watch",
     "watch:server": "nodemon"
   },
   "dependencies": {
-    "eslint": "4.19.1",
     "express": "4.16.3",
     "phaser": "3.10.1",
-    "socket.io": "2.1.1"
+    "socket.io": "2.1.1",
+    "uuid": "3.2.1"
   },
   "devDependencies": {
     "@types/express": "4.16.0",
@@ -25,14 +18,18 @@
     "@types/socket.io": "1.4.35",
     "@types/socket.io-client": "1.4.32",
     "copy-webpack-plugin": "4.5.1",
+    "eslint": "4.19.1",
     "gts": "^0.6.0",
     "typescript": "~2.8.0",
     "webpack": "4.12.0",
     "webpack-cli": "3.0.8"
   },
   "nodemonConfig": {
-    "watch": ["src/server"],
-    "exec": "yarn compile && yarn server",
-    "ext": "*.ts"
+    "watch": [
+      "src/server",
+      "src/imports"
+    ],
+    "exec": "yarn server",
+    "ext": "*.js"
   }
 }
