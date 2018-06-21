@@ -11,9 +11,14 @@ export default class Client{
   }
 
   createEventHandlers(){
+    socket.on('assign-player', (data) => {
+      this.game.player = data
+      console.log('assign: ' + this.game.player)
+    })
+
     socket.on('new-player', (data) => {
-      console.log(data)
       this.game.newPlayer(data)
+      console.log('new: ' + data)
     })
   }
 }

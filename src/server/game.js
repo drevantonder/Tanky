@@ -10,4 +10,12 @@ module.exports = class Game {
     this.players.push(newPlayer)
     return newPlayer
   }
+
+  get data(){
+    let players = []
+    players.forEach(players.push)
+    return {
+      players
+    }
+  }
 }

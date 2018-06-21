@@ -30,7 +30,11 @@ module.exports = class Server {
         console.log('user disconnected')
       })
 
-      socket.emit('new-player', this.game.newPlayer().data)
+      let newPlayer = this.game.newPlayer()
+
+      socket.emit('assign-player', newPlayer.data)
+
+      io.emit('new-player', newPlayer.data)
     })
     server.listen(3000, () => {
       console.log('listening on *:3000')
