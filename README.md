@@ -21,6 +21,9 @@ yarn watch:client
 ```
 This will use webpack and watch the client src and rebuild on any changes
 
+## Docs
+see [Docs](/docs/README.md)
+
 ## Attribution
 
 - Kenney (kenney.nl) for assets
