@@ -2,12 +2,9 @@
 import Phaser from 'phaser'
 
 import GameScene from './gameScene'
-const Game = require('../imports/game')
 
-export default class GameController extends Game {
+export default class GameController extends Phaser.Game {
   constructor() {
-    super()
-
     var config = {
       type: Phaser.AUTO,
       width: window.innerWidth,
@@ -16,13 +13,17 @@ export default class GameController extends Game {
       autofocus: true
     }
 
-    this.game = new Phaser.Game(config)
+    super(config)
     
     window.addEventListener('resize', () => this.onResize())
   }
 
   onResize(){
-    this.game.resize(window.innerWidth, window.innerHeight)
+    this.resize(window.innerWidth, window.innerHeight)
+  }
+
+  newPlayer(data){
+    console.log(data)
   }
 }
 

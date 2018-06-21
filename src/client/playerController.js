@@ -1,6 +1,6 @@
 ///<reference path="phaser.d.ts" />
 
-export default class Player {
+export default class PlayerController {
   constructor(tank, scene){
     this.tank = tank
     this.scene = scene

@@ -2,7 +2,7 @@
 import Phaser from 'phaser'
 
 import Tank from './tank'
-import Player from './player'
+import PlayerController from './playerController'
 
 export default class GameScene extends Phaser.Scene {
   constructor(){
@@ -18,12 +18,12 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(300, 300, 'grass') // TODO: remove this as this is just a marker
 
     this.tank = new Tank(this, 0, 0, 'tank')
-    this.player = new Player(this.tank, this)
+    this.playerController = new PlayerController(this.tank, this)
     this.cameras.main.startFollow(this.tank)
   }
 
   update(){
-    this.player.update()
+    this.playerController.update()
   }
 }
  
