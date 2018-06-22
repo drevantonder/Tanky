@@ -4,7 +4,6 @@ const Player = require('./player')
 module.exports = class Game extends State {
   constructor(data = { players: [] }){
     super(data)
-    this.players = data.players
   }
 
   newPlayer(){
@@ -19,5 +18,10 @@ module.exports = class Game extends State {
     return Object.assign({
       players
     }, super.data)
+  }
+
+  setData(data){
+    this.players = []
+    data.players.forEach(player => this.players.push(new Player(player)))
   }
 }

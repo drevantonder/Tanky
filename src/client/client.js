@@ -9,12 +9,18 @@ export default class Client{
 
     this.player = null
 
-    this.createEventHandlers()
+    this.createSocketEventHandlers()
   }
 
-  createEventHandlers(){
+  createSocketEventHandlers(){
     socket.on('assign-player', (data) => this.assignPlayer(data))
     socket.on('update:game', (data) => this.updateGame(data))
+  }
+
+  createGameEventHandlers(){
+    this.game.players.forEach((player) => {
+      player.tank.on('update', this.PhaserGame.update)
+    })
   }
 
   assignPlayer(data){
@@ -23,6 +29,7 @@ export default class Client{
 
   updateGame(data){
     this.game.setData(data)
+    console.log(this.game.data)
   }
 }
 

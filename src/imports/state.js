@@ -2,9 +2,9 @@ const EventEmitter = require('events')
 const utils = require('./utils')
 
 module.exports = class State extends EventEmitter {
-  constructor(data = {}){
+  constructor(data = { uid: utils.getUID() }){
     super()
-    this.uid = data.uid ? data.uid : utils.getUID()
+    this.setData(data)
   }
 
   get data(){
@@ -14,8 +14,6 @@ module.exports = class State extends EventEmitter {
   }
 
   setData(data){
-    for(var key in this.data){
-      this[key] = data[key]
-    }
+    this.uid = data.uid
   }
 }
