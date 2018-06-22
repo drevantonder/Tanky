@@ -15,5 +15,6 @@ module.exports = class Tank extends State {
   setData(data){
     this.x = data.x
     this.y = data.y
+    super.setData(data)
   }
 }

@@ -21,7 +21,20 @@ module.exports = class Game extends State {
   }
 
   setData(data){
-    this.players = []
-    data.players.forEach(player => this.players.push(new Player(player)))
+    if(this.players) {
+      for (let index = 0; index < data.players.length; index++) {
+        const playerData = data.players[index]
+        const player = this.players[index]
+        if (player)
+          player.setData(playerData)
+        else {
+          this.players.push(new Player(playerData))
+        }
+      }
+    } else {
+      this.players = []
+      data.players.forEach(player => this.players.push(new Player(player)))
+    }
+    super.setData(data)
   }
 }

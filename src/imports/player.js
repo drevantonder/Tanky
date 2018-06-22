@@ -13,6 +13,10 @@ module.exports = class Player extends State {
   }
 
   setData(data){
-    this.tank = data.tank
+    if (this.tank)
+      this.tank.setData(data.tank)
+    else
+      this.tank = new Tank(data.tank)
+    super.setData(data)
   }
 }
