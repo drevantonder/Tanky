@@ -1,25 +1,28 @@
 import io from 'socket.io-client'
 var socket = io()
 
-import Game from './game'
+import Game from '../imports/game'
 
 export default class Client{
   constructor(){
     this.game = new Game()
 
+    this.player = null
+
     this.createEventHandlers()
   }
 
   createEventHandlers(){
-    socket.on('assign-player', (data) => {
-      this.game.player = data
-      console.log('assign: ' + this.game.player)
-    })
+    socket.on('assign-player', (data) => this.assignPlayer(data))
+    socket.on('update:game', (data) => this.updateGame(data))
+  }
 
-    socket.on('new-player', (data) => {
-      this.game.newPlayer(data)
-      console.log('new: ' + data)
-    })
+  assignPlayer(data){
+    this.player = this.game.players.filter((player) => player.uid == data.uid)
+  }
+
+  updateGame(data){
+    this.game.setData(data)
   }
 }
 

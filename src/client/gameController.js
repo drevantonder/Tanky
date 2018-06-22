@@ -21,10 +21,6 @@ export default class GameController extends Phaser.Game {
   onResize(){
     this.resize(window.innerWidth, window.innerHeight)
   }
-
-  newPlayer(data){
-    console.log(data)
-  }
 }
 
 

@@ -9,7 +9,7 @@ const io = socketio(server)
 
 const clientPath = path.join(process.cwd(), 'dist/')
 
-const Game = require('./game')
+const Game = require('../imports/game')
 
 app.use(express.static(clientPath))
 
@@ -32,9 +32,9 @@ module.exports = class Server {
 
       let newPlayer = this.game.newPlayer()
 
+      socket.emit('update:game', this.game.data)
       socket.emit('assign-player', newPlayer.data)
-
-      io.emit('new-player', newPlayer.data)
+      
     })
     server.listen(3000, () => {
       console.log('listening on *:3000')
