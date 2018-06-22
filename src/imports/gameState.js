@@ -1,13 +1,13 @@
 const State = require('./state')
-const Player = require('./player')
+const PlayerState = require('./playerState')
 
-module.exports = class Game extends State {
+module.exports = class GameState extends State {
   constructor(data = { players: [] }){
     super(data)
   }
 
   newPlayer(){
-    let newPlayer = new Player()
+    let newPlayer = new PlayerState()
     this.players.push(newPlayer)
     return newPlayer
   }
@@ -28,12 +28,12 @@ module.exports = class Game extends State {
         if (player)
           player.setData(playerData)
         else {
-          this.players.push(new Player(playerData))
+          this.players.push(new PlayerState(playerData))
         }
       }
     } else {
       this.players = []
-      data.players.forEach(player => this.players.push(new Player(player)))
+      data.players.forEach(player => this.players.push(new PlayerState(player)))
     }
     super.setData(data)
   }

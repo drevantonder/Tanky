@@ -5,6 +5,8 @@ module.exports = class State extends EventEmitter {
   constructor(data = {}){
     super()
     this.setData(data)
+
+    this.setMaxListeners(30)
   }
 
   get data(){

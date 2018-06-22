@@ -1,8 +1,8 @@
 const State = require('./state')
-const Tank = require('./tank')
+const TankState = require('./tankState')
 
-module.exports = class Player extends State {
-  constructor(data = {tank: new Tank()}){
+module.exports = class PlayerState extends State {
+  constructor(data = {tank: new TankState()}){
     super(data)
   }
 
@@ -16,7 +16,7 @@ module.exports = class Player extends State {
     if (this.tank)
       this.tank.setData(data.tank)
     else
-      this.tank = new Tank(data.tank)
+      this.tank = new TankState(data.tank)
     super.setData(data)
   }
 }
