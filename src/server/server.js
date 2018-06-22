@@ -9,7 +9,7 @@ const io = socketio(server)
 
 const clientPath = path.join(process.cwd(), 'dist/')
 
-const Game = require('../imports/game')
+const Game = require('../imports/gameState')
 
 app.use(express.static(clientPath))
 
@@ -30,7 +30,21 @@ module.exports = class Server {
         console.log('user disconnected')
       })
 
-      socket.emit('new-player', this.game.newPlayer().toJSON())
+      socket.on('update:tank', (data) => {
+        let player = this.game.players.filter((player) => player.tank.uid == data.uid)[0]
+        if(player) {
+          console.error('updated player')
+          player.tank.setData(data)
+          io.emit('update:tank', player.tank)
+        } else {
+          console.error('player does not exist')
+        }
+      })
+
+      let newPlayer = this.game.newPlayer()
+
+      io.emit('update:game', this.game.data)
+      socket.emit('assign-player', newPlayer.data)    
     })
     server.listen(3000, () => {
       console.log('listening on *:3000')
