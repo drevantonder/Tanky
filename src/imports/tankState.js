@@ -1,6 +1,6 @@
 const State = require('./state')
 
-module.exports = class Tank extends State {
+module.exports = class TankState extends State {
   constructor(data = { x: 0, y: 0, angle: 90 }){
     super(data)
   }

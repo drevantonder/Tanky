@@ -3,10 +3,14 @@ import Phaser from 'phaser'
 
 import Tank from './tank'
 import PlayerController from './playerController'
+import Player from './player'
 
 export default class GameScene extends Phaser.Scene {
   constructor(){
     super('main')
+
+    this.players = []
+    this.tanks = []
   }
 
   preload() {
@@ -17,13 +21,27 @@ export default class GameScene extends Phaser.Scene {
   create() {
     this.add.image(300, 300, 'grass') // TODO: remove this as this is just a marker
 
-    this.tank = new Tank(this, 0, 0, 'tank')
-    this.playerController = new PlayerController(this.tank, this)
-    this.cameras.main.startFollow(this.tank)
+    this.setState(this.registry.values.state)
+    //this.registry.get('state').on('update', (game) => this.updateGame(game))
+
+    let player = this.registry.values.player
+    let tank = new Tank(this, player.tank)
+    this.playerController = new PlayerController(tank, this)
+    this.cameras.main.startFollow(tank)
   }
 
   update(){
-    this.playerController.update()
+    if(this.playerController){
+      this.playerController.update()
+    }
+  }
+
+  setState(gameState){
+    gameState.players.forEach((playerState) => this.createPlayer(playerState))
+  }
+
+  createPlayer(playerState){
+    this.players.push(new Player(this, playerState))
   }
 }
  

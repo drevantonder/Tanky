@@ -1,7 +1,10 @@
 ///<reference path="phaser.d.ts" />
 
-export default class PlayerController {
+import { EventEmitter } from 'events'
+
+export default class PlayerController extends EventEmitter {
   constructor(tank, scene){
+    super()
     this.tank = tank
     this.scene = scene
 

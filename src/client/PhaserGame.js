@@ -3,8 +3,8 @@ import Phaser from 'phaser'
 
 import GameScene from './gameScene'
 
-export default class GameController extends Phaser.Game {
-  constructor() {
+export default class PhaserGame extends Phaser.Game {
+  constructor(game) {
     var config = {
       type: Phaser.AUTO,
       width: window.innerWidth,
@@ -14,12 +14,18 @@ export default class GameController extends Phaser.Game {
     }
 
     super(config)
+
+    this.registry.values.state = game
     
     window.addEventListener('resize', () => this.onResize())
   }
 
   onResize(){
     this.resize(window.innerWidth, window.innerHeight)
+  }
+
+  assignPlayer(player) {
+    this.registry.set('player', player)
   }
 }
 
