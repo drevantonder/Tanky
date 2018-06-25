@@ -1,10 +1,7 @@
-import { Room, EntityMap, Client, nosync } from "colyseus";
+import { Room, EntityMap } from "colyseus";
 
 export class State {
     players: EntityMap<Player> = {};
-
-    @nosync
-    something = "This attribute won't be sent to the client-side";
 
     createPlayer (id: string) {
         this.players[ id ] = new Player();
@@ -14,19 +11,32 @@ export class State {
         delete this.players[ id ];
     }
 
-    movePlayer (id: string, movement: any) {
+    moveTank (id: string, movement: any) {
         if (movement.x) {
-            this.players[ id ].x += movement.x * 10;
-
-        } else if (movement.y) {
-            this.players[ id ].y += movement.y * 10;
+            this.players[ id ].tank.x += movement.x * Tank.MOVEMENT_SPEED;
+        }
+        if (movement.y) {
+            this.players[ id ].tank.y += movement.y * Tank.MOVEMENT_SPEED;
+        }
+        if (movement.angle) {
+            this.players[ id ].tank.angle += movement.angle * Tank.ROTATE_SPEED;
         }
     }
 }
 
+export class Tank {
+    static ROTATE_SPEED = 10
+    static MOVEMENT_SPEED = 10
+
+    x: number
+    y: number
+    angle: number
+    
+}
+
 export class Player {
-    x = Math.floor(Math.random() * 400);
-    y = Math.floor(Math.random() * 400);
+    tank: Tank
+    name: "Andre"
 }
 
 export class BattleRoom extends Room<State> {
@@ -45,12 +55,11 @@ export class BattleRoom extends Room<State> {
     }
 
     onMessage (client, data) {
-        console.log("StateHandlerRoom received message from", client.sessionId, ":", data);
-        this.state.movePlayer(client.sessionId, data);
+        console.log(this.roomName + " received message from", client.sessionId, ":", data);
+        this.state.moveTank(client.sessionId, data);
     }
 
     onDispose () {
         console.log("Dispose StateHandlerRoom");
     }
-
 }

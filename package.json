@@ -2,13 +2,13 @@
   "name": "tanky",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
-    "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js",
-    "build": "npm run bundle-colyseus-client",
+    "watch:server": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
+    "watch:client": "npx webpack --watch",
+    "build": "npx webpack",
     "heroku-postbuild": "npm run build"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Andre van Tonder",
+  "license": "MIT",
   "dependencies": {
     "@colyseus/monitor": "^0.1.7",
     "@types/uws": "^0.13.1",
@@ -16,13 +16,15 @@
     "colyseus.js": "^0.9.6",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
-    "serve-index": "^1.8.0",
     "superagent": "^3.8.1",
     "uws": "^10.148.0"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
     "ts-node": "^5.0.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "webpack": "4.12.0",
+    "webpack-cli": "3.0.8",
+    "copy-webpack-plugin": "4.5.1"
   }
 }
