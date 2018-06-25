@@ -1,16 +1,11 @@
 {
-  "name": "colyseus-examples",
-  "version": "1.0.0",
-  "description": "Usage Examples of Colyseus Game Server",
+  "name": "tanky",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
     "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js",
     "build": "npm run bundle-colyseus-client",
     "heroku-postbuild": "npm run build"
-  },
-  "engines": {
-    "node": "8.9.1"
   },
   "author": "",
   "license": "ISC",
