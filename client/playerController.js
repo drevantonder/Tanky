@@ -3,9 +3,9 @@
 import { EventEmitter } from 'events'
 
 export default class PlayerController extends EventEmitter {
-  constructor(tank, scene){
+  constructor(room, scene){
     super()
-    this.tank = tank
+    this.room = room
     this.scene = scene
 
     this.controls = this.scene.input.keyboard.createCursorKeys()
@@ -13,19 +13,23 @@ export default class PlayerController extends EventEmitter {
 
   update(){
     if(this.controls.left.isDown) {
-      this.tank.rotateLeft()
+      this.room.send({ input: "left" });
+      console.log("left")
     }
 
     if(this.controls.right.isDown) {
-      this.tank.rotateRight()
+      this.room.send({ input: "right" });
+      console.log("right")
     }
 
     if(this.controls.down.isDown) {
-      this.tank.forward()
+      this.room.send({ input: "down" });
+      console.log("down")
     }
 
     if(this.controls.up.isDown) {
-      this.tank.backward()
+      this.room.send({ input: "up" });
+      console.log("up")
     }
   }
 }

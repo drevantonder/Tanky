@@ -3,18 +3,12 @@ import Phaser from 'phaser'
 import Tank from './tank'
 
 export default class Player extends Phaser.GameObjects.GameObject {
-  constructor(scene, state){
+  constructor(scene, id, value){
     super(scene, 'player')
 
-    this.state = state
+    this.id = id
+    this.name = value.name
 
-    this.tank = new Tank(scene, state.tank)
-
-    this.state.on('update', () => {
-      // TODO: Players Name
-    })
+    //this.tank = new Tank(scene, value.tank)
   }
-
-
-
 }
