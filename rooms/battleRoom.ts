@@ -29,7 +29,7 @@ export class Player {
     y = Math.floor(Math.random() * 400);
 }
 
-export class StateHandlerRoom extends Room<State> {
+export class BattleRoom extends Room<State> {
     onInit (options) {
         console.log("StateHandlerRoom created!", options);
 
