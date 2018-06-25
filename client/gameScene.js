@@ -10,7 +10,6 @@ export default class GameScene extends Phaser.Scene {
     super('main')
 
     this.players = {}
-    this.tanks = {}
   }
 
   preload() {
@@ -24,18 +23,12 @@ export default class GameScene extends Phaser.Scene {
     this.room = this.registry.get('room')
 
     for (let playerID in this.room.state.players){
-      console.log(this.room.state.players[playerID])
-      this.createPlayer(playerID, this.room.state.players[playerID])
+      this.createPlayer(playerID)
     }
 
     console.log(this.room.state)
 
-    for (let playerID in this.room.state.tanks){
-      console.log(this.room.state.tanks[playerID])
-    }
-
     this.room.listen('players/:id', (change) => this.changePlayer(change))
-    this.room.listen('tanks/:id', (change) => console.log(change))
 
     this.room.listen('players/' + this.room.sessionId, (change) => this.assignPlayer(change.value))
 
@@ -48,20 +41,24 @@ export default class GameScene extends Phaser.Scene {
     if(this.playerController){
       this.playerController.update()
     }
+
+    for (let playerID in this.players){
+      this.players[playerID].update()
+    }
   }
 
   assignPlayer(player){
     console.log('player: ', player)
 
-    let tank = new Tank(this, player.tank)
+    let tank = this.players[this.room.sessionId].tank
     this.playerController = new PlayerController(this.registry.get('room'), this)
     this.cameras.main.startFollow(tank)
   }
 
   changePlayer(change){
-    console.log(change)
+    console.log('Player Change: ', change)
     if (change.operation === 'add') {
-      this.createPlayer(change.path.id, change.value)
+      this.createPlayer(change.path.id)
     } else if (change.operation === 'replace') {
       console.log('hello')
     } else if (change.operation === 'remove') {
@@ -70,11 +67,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
   removePlayer(id){
+    console.log('Removing Player: ', id)
     delete this.players[ id ] 
   }
 
-  createPlayer(id, value){
-    this.players[ id ] = new Player(this, id, value)
+  createPlayer(id){
+    console.log('Creating Player: ', id)
+    this.players[ id ] = new Player(this, id, this.room.state.players[id])
   }
 }
  

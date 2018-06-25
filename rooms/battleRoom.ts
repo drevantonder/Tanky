@@ -1,22 +1,21 @@
 import { EntityMap, Room } from "colyseus";
+import { deg2Rad } from "@gamestdio/mathf";
 
 export class State {
     players: EntityMap<Player> = {};
-    tanks: EntityMap<Tank> = {};
 
     createPlayer(id: string) {
         this.players[ id ] = new Player();
-        this.tanks[ id ] = new Tank();
     }
 
     removePlayer(id: string) {
         delete this.players[ id ];
-        delete this.tanks[ id ];
     }
 
     moveTank(id: string, movement: any) {
+        console.log(this.players[ id ].tank);
         if (movement.input) {
-            const tank = this.tanks[ id ];
+            const tank = this.players[ id ].tank;
             switch (movement.input) {
                 case "right":
                     tank.rotateRight();
@@ -32,6 +31,8 @@ export class State {
                     break;
             }
         }
+
+        console.log(this.players[ id ].tank);
     }
 }
 
@@ -57,19 +58,23 @@ export class Tank {
     }
 
     forward() {
-        this.x += Math.cos(this.angle) * Tank.MOVEMENT_SPEED;
-        this.y += Math.sin(this.angle) * Tank.MOVEMENT_SPEED;
+        this.x += Math.cos(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
+        this.y += Math.sin(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
     }
 
     reverse() {
-        this.x += Math.cos(this.angle) * Tank.MOVEMENT_SPEED;
-        this.y += Math.sin(this.angle) * Tank.MOVEMENT_SPEED;
+        this.x -= Math.cos(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
+        this.y -= Math.sin(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
     }
 
 }
 
 export class Player {
     name = "Andre";
+    tank: Tank;
+    constructor() {
+        this.tank = new Tank();
+    }
 }
 
 export class BattleRoom extends Room<State> {

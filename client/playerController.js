@@ -13,23 +13,23 @@ export default class PlayerController extends EventEmitter {
 
   update(){
     if(this.controls.left.isDown) {
-      this.room.send({ input: "left" });
-      console.log("left")
+      this.room.send({ input: 'left' })
+      console.log('left')
     }
 
     if(this.controls.right.isDown) {
-      this.room.send({ input: "right" });
-      console.log("right")
+      this.room.send({ input: 'right' })
+      console.log('right')
     }
 
     if(this.controls.down.isDown) {
-      this.room.send({ input: "down" });
-      console.log("down")
+      this.room.send({ input: 'down' })
+      console.log('down')
     }
 
     if(this.controls.up.isDown) {
-      this.room.send({ input: "up" });
-      console.log("up")
+      this.room.send({ input: 'up' })
+      console.log('up')
     }
   }
 }
