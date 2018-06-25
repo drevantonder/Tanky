@@ -1,6 +1,6 @@
 # Tanky
 
-A html5 mutliplayer realtime game with node.js (using socket.io 👍) as the backend.
+A html5 mutliplayer realtime game with http://colyseus.io as the backend and phaser.io as the game engine for the frontend.
 
 ## The game
 Each player will control a tank on the battlefield. The players will drive their tank around trying to destroy the opponents tanks by firing shells at the tanks.
