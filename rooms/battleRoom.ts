@@ -13,7 +13,6 @@ export class State {
     }
 
     moveTank(id: string, movement: any) {
-        console.log(this.players[ id ].tank);
         if (movement.input) {
             const tank = this.players[ id ].tank;
             switch (movement.input) {
@@ -31,8 +30,6 @@ export class State {
                     break;
             }
         }
-
-        console.log(this.players[ id ].tank);
     }
 }
 
