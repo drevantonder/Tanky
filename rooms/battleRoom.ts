@@ -41,7 +41,7 @@ export class Player {
 
 export class BattleRoom extends Room<State> {
     onInit (options) {
-        console.log("StateHandlerRoom created!", options);
+        console.log(this.roomName + " created!", options);
 
         this.setState(new State());
     }
@@ -60,6 +60,6 @@ export class BattleRoom extends Room<State> {
     }
 
     onDispose () {
-        console.log("Dispose StateHandlerRoom");
+        console.log("Dispose " + this.roomName);
     }
 }
