@@ -44,7 +44,7 @@ export default class GameScene extends Phaser.Scene {
 
   assignPlayer(){
     let tank = this.players[this.room.sessionId].tank
-    this.playerController = new PlayerController(this.registry.get('room'), this)
+    this.playerController = new PlayerController(tank, this.registry.get('room'), this)
     this.cameras.main.startFollow(tank)
   }
 

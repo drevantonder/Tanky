@@ -18,7 +18,7 @@ const gameServer = new Server({
 
 gameServer.register("battle", BattleRoom);
 
-app.use("/", express.static(path.join(__dirname, "dist")));
+app.use("/", express.static(path.join(process.cwd(), "dist")));
 
 // (optional) attach web monitoring panel
 app.use("/colyseus", monitor(gameServer));
