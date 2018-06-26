@@ -2,7 +2,7 @@
   "name": "tanky",
   "main": "index.js",
   "scripts": {
-    "watch:server": "nodemon --exec ts-node src/server/index.ts",
+    "watch:server": "nodemon --exec ts-node --project src/server/tsconfig.json src/server/index.ts",
     "watch:client": "npx webpack --watch",
     "build": "npx webpack",
     "heroku-postbuild": "npm run build"
