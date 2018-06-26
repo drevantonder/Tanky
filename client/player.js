@@ -13,12 +13,12 @@ export default class Player extends Phaser.GameObjects.GameObject {
     this.tank = new Tank(scene, state.tank)
   }
 
-  update(){
+  update(time, delta){
     this.state = this.scene.registry.get('room').state.players[this.id]
     
     this.name = this.state.name
 
     this.tank.state = this.state.tank
-    this.tank.update()
+    this.tank.update(time, delta)
   }
 }
