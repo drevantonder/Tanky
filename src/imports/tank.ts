@@ -1,15 +1,14 @@
 import { deg2Rad } from "@gamestdio/mathf/lib";
+import { Point } from "./point";
 
 export class Tank {
     static ROTATE_SPEED = 4;
-    static MOVEMENT_SPEED = 10;
+    static MOVEMENT_SPEED = 7;
 
-    x: number;
-    y: number;
+    point: Point;
     angle: number;
     constructor() {
-        this.x = 0;
-        this.y = 0;
+        this.point = new Point(0, 0);
         this.angle = 0;
     }
 
@@ -22,12 +21,12 @@ export class Tank {
     }
 
     forward() {
-        this.x += Math.cos(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
-        this.y += Math.sin(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
+        this.point.x += Math.cos(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
+        this.point.y += Math.sin(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
     }
 
     reverse() {
-        this.x -= Math.cos(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
-        this.y -= Math.sin(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
+        this.point.x -= Math.cos(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
+        this.point.y -= Math.sin(this.angle * deg2Rad) * Tank.MOVEMENT_SPEED;
     }
 }

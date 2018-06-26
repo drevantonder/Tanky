@@ -2,7 +2,7 @@
   "name": "tanky",
   "main": "index.js",
   "scripts": {
-    "watch:server": "nodemon --exec ts-node --project src/server/tsconfig.json src/server/index.ts",
+    "watch:server": "nodemon --watch ./src --exec ts-node src/server/index.ts",
     "watch:client": "npx webpack --watch",
     "build": "npx webpack",
     "heroku-postbuild": "npm run build"
@@ -14,7 +14,7 @@
     "@gamestdio/mathf": "1.0.1",
     "@types/uws": "^0.13.1",
     "colyseus": "^0.9.11",
-    "colyseus.js": "^0.9.6",
+    "colyseus.js": "^0.9.7",
     "eslint": "5.0.0",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
@@ -28,7 +28,7 @@
     "copy-webpack-plugin": "4.5.1",
     "ts-node": "^5.0.1",
     "typescript": "^2.7.2",
-    "webpack": "4.12.0",
+    "webpack": "4.12.1",
     "webpack-cli": "3.0.8"
   }
 }
