@@ -1,4 +1,3 @@
-///<reference path="phaser.d.ts" />
 import Phaser from 'phaser'
 import { lerp } from '@gamestdio/mathf'
 

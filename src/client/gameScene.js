@@ -1,8 +1,8 @@
-///<reference path="phaser.d.ts" />
 import Phaser from 'phaser'
 
 import PlayerController from './playerController'
 import Player from './player'
+import Tile from '../imports/tile'
 
 export default class GameScene extends Phaser.Scene {
   constructor(){
@@ -68,7 +68,7 @@ export default class GameScene extends Phaser.Scene {
     let mapHeight = this.room.state.map.height
 
     // Creating a blank tilemap with the specified dimensions
-    var map = this.make.tilemap({ tileWidth: 64, tileHeight: 64, width: mapWidth, height: mapHeight})
+    var map = this.make.tilemap({ tileWidth: Tile.TILE_SIZE, tileHeight: Tile.TILE_SIZE, width: mapWidth, height: mapHeight})
 
     let tiles = map.addTilesetImage('tiles')
 
