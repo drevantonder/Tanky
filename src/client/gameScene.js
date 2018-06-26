@@ -32,19 +32,19 @@ export default class GameScene extends Phaser.Scene {
       this.assignPlayer()
   }
 
-  update(){
+  update(time, delta){
     if(this.playerController){
-      this.playerController.update()
+      this.playerController.update(time, delta)
     }
 
     for (let playerID in this.players){
-      this.players[playerID].update()
+      this.players[playerID].update(time, delta)
     }
   }
 
   assignPlayer(){
     let tank = this.players[this.room.sessionId].tank
-    this.playerController = new PlayerController(this.registry.get('room'), this)
+    this.playerController = new PlayerController(tank, this.registry.get('room'), this)
     this.cameras.main.startFollow(tank)
   }
 

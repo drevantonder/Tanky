@@ -11,9 +11,5 @@
     },
     "include": [
       "**/*.ts"
-    ],
-    "exclude": [
-        "client",
-        "node_modules"
     ]
 }

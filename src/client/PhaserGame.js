@@ -5,7 +5,7 @@ import GameScene from './gameScene'
 
 export default class PhaserGame extends Phaser.Game {
   constructor(room) {
-    var config = {
+    const config = {
       type: Phaser.AUTO,
       width: window.innerWidth,
       height: window.innerHeight,
@@ -14,15 +14,13 @@ export default class PhaserGame extends Phaser.Game {
     }
 
     super(config)
-    
+
     this.registry.set('room', room)
-    
+
     window.addEventListener('resize', () => this.onResize())
   }
 
-  onResize(){
+  onResize() {
     this.resize(window.innerWidth, window.innerHeight)
   }
 }
-
-

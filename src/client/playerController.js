@@ -3,7 +3,7 @@
 import { EventEmitter } from 'events'
 
 export default class PlayerController extends EventEmitter {
-  constructor(room, scene){
+  constructor(tank, room, scene){
     super()
     this.room = room
     this.scene = scene
@@ -14,6 +14,7 @@ export default class PlayerController extends EventEmitter {
   update(){
     if(this.controls.left.isDown) {
       this.room.send({ input: 'left' })
+
     }
 
     if(this.controls.right.isDown) {

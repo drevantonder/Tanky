@@ -3,12 +3,21 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: 'development',
-  entry: './client/index.js',
+  devtool: 'inline-source-map',
+  entry: './src/client/index.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
+  module: {
+    rules: [
+      { test: /\.tsx?$/, loader: 'ts-loader' }
+    ]
+  },
   plugins: [
-    new CopyWebpackPlugin(['client/static/'])
+    new CopyWebpackPlugin(['src/client/static/'])
   ]
 }
