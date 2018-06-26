@@ -3,11 +3,11 @@ import Phaser from 'phaser'
 import { lerp } from '@gamestdio/mathf'
 
 const TEXTURE_ANGLE_DIFFERENCE_DEGREES = -90
-const INTERPOLATION_PROGRESS = 0.3
+const INTERPOLATION_PROGRESS = 0.1
 
 export default class Tank extends Phaser.GameObjects.Sprite {
   constructor(scene, state){
-    super(scene, state.x, state.y, 'tank')
+    super(scene, state.point.x, state.point.y, 'tank')
 
     this.state = state
     this.angle = state.angle + TEXTURE_ANGLE_DIFFERENCE_DEGREES
@@ -16,8 +16,8 @@ export default class Tank extends Phaser.GameObjects.Sprite {
   }
 
   update(time, delta){
-    this.x = lerp(this.x, this.state.x, INTERPOLATION_PROGRESS)
-    this.y = lerp(this.y, this.state.y, INTERPOLATION_PROGRESS)
+    this.x = lerp(this.x, this.state.point.x, INTERPOLATION_PROGRESS)
+    this.y = lerp(this.y, this.state.point.y, INTERPOLATION_PROGRESS)
     this.angle = this.state.angle + TEXTURE_ANGLE_DIFFERENCE_DEGREES
   }
 }

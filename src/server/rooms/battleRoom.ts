@@ -1,8 +1,10 @@
 import { EntityMap, Room } from "colyseus";
 import { Player } from "../../imports/players";
+import { GameMap } from "../../imports/gameMap";
 
 export class State {
     players: EntityMap<Player> = {};
+    map = new GameMap(50, 50);
 
     createPlayer(id: string) {
         this.players[ id ] = new Player();

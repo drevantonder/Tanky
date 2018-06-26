@@ -13,14 +13,13 @@ export default class GameScene extends Phaser.Scene {
 
   preload() {
     this.load.image('tank', 'assets/tank_red.png')  
-    this.load.image('grass', 'assets/tileGrass1.png')  // TODO: remove this as this is just a marker
+    this.load.image('tiles', 'assets/terrainTiles_default.png')
   }
 
   create() {
-
-    this.add.image(300, 300, 'grass') // TODO: remove this as this is just a marker
-
     this.room = this.registry.get('room')
+
+    this.createMap()
 
     for (let playerID in this.room.state.players){
       this.createPlayer(playerID, this.room.state.players[playerID])
@@ -45,7 +44,7 @@ export default class GameScene extends Phaser.Scene {
   assignPlayer(){
     let tank = this.players[this.room.sessionId].tank
     this.playerController = new PlayerController(tank, this.registry.get('room'), this)
-    this.cameras.main.startFollow(tank)
+    this.cameras.main.startFollow(tank, true, 0.1, 0.1)
   }
 
   changePlayer(change){
@@ -62,6 +61,22 @@ export default class GameScene extends Phaser.Scene {
 
   createPlayer(id, value){
     this.players[ id ] = new Player(this, id, value)
+  }
+
+  createMap(){
+    let mapWidth = this.room.state.map.width
+    let mapHeight = this.room.state.map.height
+
+    // Creating a blank tilemap with the specified dimensions
+    var map = this.make.tilemap({ tileWidth: 64, tileHeight: 64, width: mapWidth, height: mapHeight})
+
+    let tiles = map.addTilesetImage('tiles')
+
+    var layer = map.createBlankDynamicLayer('layer1', tiles)
+    
+    layer.randomize(0,0, map.width, map.height, [0, 10])
+
+    layer = map.convertLayerToStatic(layer)
   }
 }
  
