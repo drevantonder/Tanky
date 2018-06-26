@@ -4,7 +4,7 @@ import { GameMap } from "../../imports/gameMap";
 
 export class State {
     players: EntityMap<Player> = {};
-    map = new GameMap(20, 20);
+    map = new GameMap(50, 50);
 
     createPlayer(id: string) {
         this.players[ id ] = new Player();

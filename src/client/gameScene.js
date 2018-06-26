@@ -73,16 +73,10 @@ export default class GameScene extends Phaser.Scene {
     let tiles = map.addTilesetImage('tiles')
 
     var layer = map.createBlankDynamicLayer('layer1', tiles)
-    layer.setScale(1)
-
     
-
-    layer.fill(0, 0, 0, map.width, map.height)
+    layer.randomize(0,0, map.width, map.height, [0, 10])
 
     layer = map.convertLayerToStatic(layer)
-    layer.setScale(1)
-
-    
   }
 }
  
