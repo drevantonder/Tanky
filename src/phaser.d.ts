@@ -53809,7 +53809,7 @@ declare namespace Phaser {
              * @param tileHeight The height of the tiles the layer uses for calculations. If not
              * specified, it will default to the map's tileHeight.
              */
-            createBlankDynamicLayer(name: string, tileset: Phaser.Tilemaps.Tileset, width: integer, height: integer, tileWidth: integer, tileHeight: integer): Phaser.Tilemaps.DynamicTilemapLayer;
+            createBlankDynamicLayer(name: string, tileset: Phaser.Tilemaps.Tileset, width?: integer, height?: integer, tileWidth?: integer, tileHeight?: integer): Phaser.Tilemaps.DynamicTilemapLayer;
 
             /**
              * Creates a new DynamicTilemapLayer that renders the LayerData associated with the given
