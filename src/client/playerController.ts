@@ -9,10 +9,9 @@ export default class PlayerController {
     this.controls = this.scene.input.keyboard.createCursorKeys();
   }
 
-  update() {
+  update(time, delta) {
     if (this.controls.left.isDown) {
       this.room.send({ input: "left" });
-
     }
 
     if (this.controls.right.isDown) {

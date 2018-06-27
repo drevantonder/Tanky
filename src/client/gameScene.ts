@@ -3,11 +3,12 @@ import * as Phaser from "phaser";
 import PlayerController from "./playerController";
 import Player from "./player";
 import { Tile } from "../imports/tile";
+import { Room } from "colyseus.js";
 
 export default class GameScene extends Phaser.Scene {
   players: {};
-  room: any;
-  playerController: any;
+  room: Room;
+  playerController: PlayerController;
   constructor() {
     super("main");
 
