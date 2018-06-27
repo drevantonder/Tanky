@@ -1,6 +1,9 @@
+import { Room } from "colyseus.js";
+import * as Phaser from "phaser";
+
 export default class PlayerController {
-  room: any;
-  scene: any;
+  room: Room;
+  scene: Phaser.Scene;
   controls: any;
   constructor(tank, room, scene) {
     this.room = room;
