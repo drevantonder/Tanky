@@ -4,6 +4,7 @@ import PlayerController from "./playerController";
 import { PlayerSprite } from "./playerSprite";
 import { Tile } from "../imports/tile";
 import { Room } from "colyseus.js";
+import { Assets } from "./assets";
 
 export default class GameScene extends Phaser.Scene {
   players: Map<string, PlayerSprite>;
@@ -18,8 +19,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("tank", "assets/tank_red.png");
-    this.load.image("tiles", "assets/terrainTiles_default.png");
+    Assets.assets.forEach((asset) => {
+      this.load.image(asset.texture, asset.file);
+    });
   }
 
   create() {
