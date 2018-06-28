@@ -8,6 +8,8 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
     state: any;
     asset: Asset;
 
+    stateGetter: () => any;
+
     constructor(scene: Phaser.Scene, state, texture: string) {
         super(scene, state.point.x, state.point.y, texture);
 
@@ -21,6 +23,8 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
     }
 
     update(time = 0, delta = 0) {
+        this.state = this.stateGetter();
+
         this.x = lerp(this.x, this.state.point.x, NetworkedSprite.INTERPOLATION_CONSTANT);
         this.y = lerp(this.y, this.state.point.y, NetworkedSprite.INTERPOLATION_CONSTANT);
         this.angle = lerpAngle(

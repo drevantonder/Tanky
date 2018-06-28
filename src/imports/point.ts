@@ -8,27 +8,39 @@ export class Point {
 
     add(n: any) {
         if (typeof n === "number") {
-            return new Point(this.x + n, this.y + n);
+            this.x += n;
+            this.y += n;
+            return this;
         } else if (n instanceof Point) {
-            return new Point(this.x + n.x, this.y + n.y);
+            this.x += n.x;
+            this.y += n.y;
+            return this;
         }
         throw new Error("Method not implemented.");
     }
 
     multiply(n: any) {
         if (typeof n === "number") {
-            return new Point(this.x * n, this.y * n);
+            this.x *= n;
+            this.y *= n;
+            return this;
         } else if (n instanceof Point) {
-            return new Point(this.x * n.x, this.y * n.y);
+            this.x *= n.x;
+            this.y *= n.y;
+            return this;
         }
         throw new Error("Method not implemented.");
     }
 
     subtract(n: any) {
         if (typeof n === "number") {
-            return new Point(this.x - n, this.y - n);
+            this.x -= n;
+            this.y -= n;
+            return this;
         } else if (n instanceof Point) {
-            return new Point(this.x - n.x, this.y - n.y);
+            this.x -= n.x;
+            this.y -= n.y;
+            return this;
         }
         throw new Error("Method not implemented.");
     }

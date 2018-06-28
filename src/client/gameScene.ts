@@ -78,7 +78,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createPlayer(id, value) {
-    this.players[ id ] = new PlayerGameObject(this, value);
+    const player = new PlayerGameObject(this, value);
+    this.players[ id ] = player;
+    player.stateGetter = () => {
+      return this.room.state.players[ id ];
+    };
   }
 
   createMap() {
