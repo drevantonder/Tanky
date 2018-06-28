@@ -9,6 +9,8 @@ export default class GameScene extends Phaser.Scene {
   players: Map<string, PlayerSprite>;
   room: Room;
   playerController: PlayerController;
+  map: Phaser.Tilemaps.Tilemap;
+  player: PlayerSprite;
   constructor() {
     super("main");
 
@@ -24,6 +26,8 @@ export default class GameScene extends Phaser.Scene {
     this.room = this.registry.get("room");
 
     this.createMap();
+
+    this.setCameraBounds();
 
     for (const playerID in this.room.state.players) {
       if (this.room.state.players.hasOwnProperty(playerID)) {
@@ -51,9 +55,14 @@ export default class GameScene extends Phaser.Scene {
   }
 
   assignPlayer() {
-    const tank = this.players[this.room.sessionId].tank;
+    this.player = this.players[this.room.sessionId];
+    const tank = this.player.tank;
     this.playerController = new PlayerController(this.registry.get("room"), this);
     this.cameras.main.startFollow(tank);
+  }
+
+  setCameraBounds() {
+    this.cameras.main.setBounds(0, 0, this.map.width * this.map.tileWidth, this.map.height * this.map.tileHeight);
   }
 
   changePlayer(change) {
@@ -77,7 +86,7 @@ export default class GameScene extends Phaser.Scene {
     const mapHeight = this.room.state.map.height;
 
     // Creating a blank tilemap with the specified dimensions
-    const map = this.make.tilemap(
+    this.map = this.make.tilemap(
       {
         tileWidth: Tile.TILE_SIZE,
         tileHeight: Tile.TILE_SIZE,
@@ -86,12 +95,12 @@ export default class GameScene extends Phaser.Scene {
       },
     );
 
-    const tiles = map.addTilesetImage("tiles");
+    const tiles = this.map.addTilesetImage("tiles");
 
-    const layer = map.createBlankDynamicLayer("layer1", tiles);
+    const layer = this.map.createBlankDynamicLayer("layer1", tiles);
 
-    layer.randomize(0, 0, map.width, map.height, [0, 10]);
+    layer.randomize(0, 0, this.map.width, this.map.height, [0, 10]);
 
-    map.convertLayerToStatic(layer);
+    this.map.convertLayerToStatic(layer);
   }
 }
