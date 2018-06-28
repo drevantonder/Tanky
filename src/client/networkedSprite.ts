@@ -19,7 +19,7 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
         this.x = this.state.point.x;
         this.y = this.state.point.y;
 
-        scene.add.existing(this);
+        this.scene.add.existing(this);
     }
 
     update(time = 0, delta = 0) {

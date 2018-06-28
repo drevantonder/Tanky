@@ -7,7 +7,7 @@ export abstract class NetworkedGameObject extends Phaser.GameObjects.GameObject 
     constructor(scene: Phaser.Scene, state, type: string) {
         super(scene, type);
         this.state = state;
-        scene.add.existing(this);
+        this.scene.add.existing(this);
     }
 
     update() {

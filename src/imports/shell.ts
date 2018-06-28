@@ -1,7 +1,6 @@
 import { Point } from "./point";
 import { Tank } from "./tank";
 import { Sprite } from "./sprite";
-import { deg2Rad } from "@gamestdio/mathf/lib";
 
 export class Shell extends Sprite {
     static DEFAULT_SPEED = 20;
@@ -10,6 +9,7 @@ export class Shell extends Sprite {
     tank: Tank;
     damage: number;
     speed: number;
+    uuid: string;
 
     constructor(
         point = new Point(0, 0),

@@ -2,10 +2,11 @@ import { EntityMap, Room } from "colyseus";
 import { Player } from "../../imports/players";
 import { GameMap } from "../../imports/gameMap";
 import { Shell } from "../../imports/shell";
+import { v4 } from "uuid";
 
 export class State {
     players: EntityMap<Player> = {};
-    shells: Shell[] = [];
+    shells: EntityMap<Shell> = {};
     map = new GameMap(50, 50);
 
     createPlayer(id: string) {
@@ -34,7 +35,7 @@ export class State {
                     break;
                 case "fire":
                     const shell = tank.fire();
-                    this.shells.push(shell);
+                    this.shells[ v4() ] = shell;
                     break;
             }
             tank.point = this.map.lockInMap(tank.point);
@@ -42,9 +43,12 @@ export class State {
     }
 
     update() {
-        this.shells.forEach((shell) => {
-            shell.update();
-        });
+        for (const uuid in this.shells) {
+            if (this.shells.hasOwnProperty(uuid)) {
+                const shell = this.shells[uuid];
+                shell.update();
+            }
+        }
     }
 }
 
