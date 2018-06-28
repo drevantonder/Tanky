@@ -54,7 +54,7 @@ export class BattleRoom extends Room<State> {
 
         this.setState(new State());
 
-        this.clock.setInterval(() => this.state.update(), 100);
+        this.setSimulationInterval(() => this.update());
     }
 
     public onJoin(client) {
@@ -72,5 +72,9 @@ export class BattleRoom extends Room<State> {
 
     public onDispose() {
         console.log("Dispose " + this.roomName);
+    }
+
+    update() {
+        this.state.update();
     }
 }
