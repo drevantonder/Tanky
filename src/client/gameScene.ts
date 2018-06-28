@@ -1,18 +1,18 @@
 import * as Phaser from "phaser";
 
 import PlayerController from "./playerController";
-import Player from "./player";
+import { PlayerSprite } from "./playerSprite";
 import { Tile } from "../imports/tile";
 import { Room } from "colyseus.js";
 
 export default class GameScene extends Phaser.Scene {
-  players: {};
+  players: Map<string, PlayerSprite>;
   room: Room;
   playerController: PlayerController;
   constructor() {
     super("main");
 
-    this.players = {};
+    this.players = new Map<string, PlayerSprite>();
   }
 
   preload() {
@@ -52,7 +52,7 @@ export default class GameScene extends Phaser.Scene {
 
   assignPlayer() {
     const tank = this.players[this.room.sessionId].tank;
-    this.playerController = new PlayerController(tank, this.registry.get("room"), this);
+    this.playerController = new PlayerController(this.registry.get("room"), this);
     this.cameras.main.startFollow(tank, true, 0.1, 0.1);
   }
 
@@ -69,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createPlayer(id, value) {
-    this.players[ id ] = new Player(this, id, value);
+    this.players[ id ] = new PlayerSprite(this, id, value);
   }
 
   createMap() {

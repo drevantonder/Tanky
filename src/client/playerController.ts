@@ -5,7 +5,7 @@ export default class PlayerController {
   room: Room;
   scene: Phaser.Scene;
   controls: any;
-  constructor(tank, room, scene) {
+  constructor(room, scene) {
     this.room = room;
     this.scene = scene;
 

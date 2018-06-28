@@ -7,17 +7,21 @@ export class Tank {
 
     point: Point;
     angle: number;
-    constructor() {
-        this.point = new Point(0, 0);
-        this.angle = 0;
+    constructor(point = new Point(0, 0), angle = 0) {
+        this.point = point;
+        this.setAngle(angle);
     }
 
     rotateRight() {
-        this.angle += Tank.ROTATE_SPEED;
+        this.setAngle(this.angle + Tank.ROTATE_SPEED);
     }
 
     rotateLeft() {
-        this.angle -= Tank.ROTATE_SPEED;
+        this.setAngle(this.angle - Tank.ROTATE_SPEED);
+    }
+
+    setAngle(angle) {
+        this.angle = angle % 360;
     }
 
     forward() {
