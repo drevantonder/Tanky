@@ -1,5 +1,6 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'development',
@@ -18,6 +19,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin(['src/client/static/'])
+    new CopyWebpackPlugin(['src/client/static/']),
+    new webpack.WatchIgnorePlugin([
+      /\.js$/,
+      /\.d\.ts$/
+    ])
   ]
 }
