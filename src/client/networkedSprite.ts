@@ -11,7 +11,7 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
     constructor(scene: Phaser.Scene, state, texture: string) {
         super(scene, state.point.x, state.point.y, texture);
 
-        this.asset = Assets.assets[texture];
+        this.asset = Assets.assets.get(texture);
         this.state = state;
         this.angle = this.state.angle + this.asset.textureAngleDifference;
         this.x = this.state.point.x;
