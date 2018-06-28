@@ -5,11 +5,13 @@ export default class PlayerController {
   room: Room;
   scene: Phaser.Scene;
   controls: any;
+  pointer: Phaser.Input.Pointer;
   constructor(room, scene) {
     this.room = room;
     this.scene = scene;
 
     this.controls = this.scene.input.keyboard.createCursorKeys();
+    this.pointer = this.scene.input.activePointer;
   }
 
   update(time, delta) {
@@ -27,6 +29,10 @@ export default class PlayerController {
 
     if (this.controls.up.isDown) {
       this.room.send({ input: "up" });
+    }
+
+    if (this.pointer.isDown) {
+      this.room.send({ input: "fire" });
     }
   }
 }
