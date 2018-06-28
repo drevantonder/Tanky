@@ -1,5 +1,6 @@
 import { Tile } from "./tile";
 import { Point } from "./point";
+import { clamp } from "@gamestdio/mathf/lib";
 
 export class GameMap {
     width: number;
@@ -22,25 +23,7 @@ export class GameMap {
     }
 
     lockInMap(point: Point) {
-        let x = point.x;
-        if (point.x > this.widthInPixels) {
-            x = this.widthInPixels;
-        }
-
-        if (point.x < 0) {
-            x = 0;
-        }
-
-        let y = point.y;
-        if (point.y > this.heightInPixels) {
-            y = this.heightInPixels;
-        }
-
-        if (point.y < 0) {
-            y = 0;
-        }
-
-        return new Point(x, y);
+        return new Point(clamp(point.x, 0, this.widthInPixels), clamp(point.y, 0, this.heightInPixels));
     }
 
     generate() {
@@ -53,5 +36,25 @@ export class GameMap {
 
     createTile(point: Point) {
         this.tiles[point.toString()] = new Tile(point);
+    }
+
+    isInside(point: Point) {
+        if (point.x > this.widthInPixels) {
+            return false;
+        }
+
+        if (point.x < 0) {
+            return false;
+        }
+
+        if (point.y > this.heightInPixels) {
+            return false;
+        }
+
+        if (point.y < 0) {
+            return false;
+        }
+
+        return true;
     }
 }

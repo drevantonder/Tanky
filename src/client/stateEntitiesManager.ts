@@ -25,7 +25,8 @@ export class StateEntitiesManager<T extends NetworkedGameObject> extends Map<str
     }
 
     remove(id): any {
-       this.delete(id);
+        this.get(id).destroy();
+        this.delete(id);
     }
 
     private setInitialState() {
@@ -40,9 +41,9 @@ export class StateEntitiesManager<T extends NetworkedGameObject> extends Map<str
         this.room.listen(this.path + "/:id", (change) => {
             if (change.operation === "add") {
                 this.create(change.path.id, change.value);
-              } else if (change.operation === "remove") {
+            } else if (change.operation === "remove") {
                 this.remove(change.path.id);
-              }
+            }
         });
     }
 }

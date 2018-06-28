@@ -46,7 +46,11 @@ export class State {
         for (const uuid in this.shells) {
             if (this.shells.hasOwnProperty(uuid)) {
                 const shell = this.shells[uuid];
-                shell.update();
+                if (this.map.isInside(shell.point)) {
+                    shell.update();
+                } else {
+                    delete this.shells[uuid];
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ import { StateEntitiesManager } from "./stateEntitiesManager";
 
 export default class GameScene extends Phaser.Scene {
   players: StateEntitiesManager<PlayerGameObject>;
-  shells: ShellSprite[] = [];
+  shells: StateEntitiesManager<ShellSprite>;
   room: Room;
   playerController: PlayerController;
   map: Phaser.Tilemaps.Tilemap;
@@ -34,14 +34,11 @@ export default class GameScene extends Phaser.Scene {
       return new PlayerGameObject(this, value);
     });
 
-    this.setCameraBounds();
+    this.shells = new StateEntitiesManager<ShellSprite>(this.room, "shells", (value) => {
+      return new ShellSprite(this, value);
+    });
 
-    for (const uuid in this.room.state.shells) {
-      if (this.shells.hasOwnProperty(uuid)) {
-          const shell = this.shells[uuid];
-          this.createShell(shell);
-      }
-    }
+    this.setCameraBounds();
 
     if (this.room.state.players[this.room.sessionId]) {
       this.assignPlayer();
@@ -56,14 +53,10 @@ export default class GameScene extends Phaser.Scene {
     this.players.forEach((player) => {
       player.update(time, delta);
     });
-  }
 
-  createShell(value) {
-    const shell = new ShellSprite(this, value);
-    this.shells.push(shell);
-    shell.stateGetter = () => {
-      return this.room.state.shells[ shell.state.uuid ];
-    };
+    this.shells.forEach((shell) => {
+      shell.update(time, delta);
+    });
   }
 
   assignPlayer() {
