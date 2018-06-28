@@ -31,6 +31,7 @@ export class State {
                     tank.reverse();
                     break;
             }
+            tank.point = this.map.lockInMap(tank.point);
         }
     }
 }

@@ -4,13 +4,43 @@ import { Point } from "./point";
 export class GameMap {
     width: number;
     height: number;
-
     tiles = {};
+
     constructor(width: number, height: number) {
         this.width = width;
         this.height = height;
 
         this.generate();
+    }
+
+    get widthInPixels() {
+        return this.width * Tile.TILE_SIZE;
+    }
+
+    get heightInPixels() {
+        return this.height * Tile.TILE_SIZE;
+    }
+
+    lockInMap(point: Point) {
+        let x = point.x;
+        if (point.x > this.widthInPixels) {
+            x = this.widthInPixels;
+        }
+
+        if (point.x < 0) {
+            x = 0;
+        }
+
+        let y = point.y;
+        if (point.y > this.heightInPixels) {
+            y = this.heightInPixels;
+        }
+
+        if (point.y < 0) {
+            y = 0;
+        }
+
+        return new Point(x, y);
     }
 
     generate() {
