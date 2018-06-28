@@ -1,10 +1,11 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: './src/client/index.js',
+  entry: './src/client/index.ts',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
@@ -18,6 +19,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin(['src/client/static/'])
+    new CopyWebpackPlugin(['src/client/static/']),
+    new webpack.WatchIgnorePlugin([
+      /\.js$/,
+      /\.d\.ts$/
+    ])
   ]
 }
