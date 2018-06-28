@@ -1,21 +1,19 @@
 import * as Phaser from "phaser";
 
 import PlayerController from "./playerController";
-import { PlayerSprite } from "./playerSprite";
+import { PlayerGameObject } from "./playerGameObject";
 import { Tile } from "../imports/tile";
 import { Room } from "colyseus.js";
 import { Assets } from "./assets";
 
 export default class GameScene extends Phaser.Scene {
-  players: Map<string, PlayerSprite>;
+  players = new Map<string, PlayerGameObject>();
   room: Room;
   playerController: PlayerController;
   map: Phaser.Tilemaps.Tilemap;
-  player: PlayerSprite;
+  player: PlayerGameObject;
   constructor() {
     super("main");
-
-    this.players = new Map<string, PlayerSprite>();
   }
 
   preload() {
@@ -80,7 +78,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createPlayer(id, value) {
-    this.players[ id ] = new PlayerSprite(this, id, value);
+    this.players[ id ] = new PlayerGameObject(this, value);
   }
 
   createMap() {

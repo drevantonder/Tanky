@@ -9,7 +9,7 @@ export class State {
     map = new GameMap(50, 50);
 
     createPlayer(id: string) {
-        this.players[ id ] = new Player();
+        this.players[ id ] = new Player(id);
     }
 
     removePlayer(id: string) {
