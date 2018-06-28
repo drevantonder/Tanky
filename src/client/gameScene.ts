@@ -53,7 +53,7 @@ export default class GameScene extends Phaser.Scene {
   assignPlayer() {
     const tank = this.players[this.room.sessionId].tank;
     this.playerController = new PlayerController(this.registry.get("room"), this);
-    this.cameras.main.startFollow(tank, true, 0.1, 0.1);
+    this.cameras.main.startFollow(tank);
   }
 
   changePlayer(change) {
