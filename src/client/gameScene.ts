@@ -88,6 +88,8 @@ export default class GameScene extends Phaser.Scene {
 
     const layer = this.map.createBlankDynamicLayer("layer1", tiles);
 
+    layer.setDepth(-1);
+
     layer.randomize(0, 0, this.map.width, this.map.height, [0, 10]);
 
     this.map.convertLayerToStatic(layer);
