@@ -45,16 +45,19 @@ export class State {
     }
 
     update() {
-        for (const uuid in this.shells) {
-            if (this.shells.hasOwnProperty(uuid)) {
-                const shell = this.shells[uuid];
-                if (this.map.isInside(shell.point)) {
-                    shell.update();
-                } else {
-                    delete this.shells[uuid];
-                }
+        Object.values(this.shells).forEach((shell) => {
+            if (this.map.isInside(shell.point)) {
+                shell.update();
+            } else {
+                shell.destroy();
             }
-        }
+        });
+
+        Object.entries(this.shells).forEach(([uuid, shell]) => {
+            if (shell.destroyed) {
+                delete this.shells[uuid];
+            }
+        });
     }
 }
 
