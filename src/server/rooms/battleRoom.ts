@@ -3,10 +3,12 @@ import { Player } from "../../imports/players";
 import { GameMap } from "../../imports/gameMap";
 import { Shell } from "../../imports/shell";
 import { v4 } from "uuid";
+import { Explosion } from "../../imports/explosion";
 
 export class State {
     players: EntityMap<Player> = {};
     shells: EntityMap<Shell> = {};
+    explosions: EntityMap<Explosion> = {};
     map = new GameMap(50, 50);
 
     createPlayer(id: string) {
@@ -45,11 +47,18 @@ export class State {
     }
 
     update() {
+        Object.values(this.explosions).forEach((explosion) => {
+            explosion.update();
+        });
+
         Object.values(this.shells).forEach((shell) => {
             if (this.map.isInside(shell.point)) {
                 shell.update();
             } else {
                 shell.destroy();
+            }
+            if (shell.destroyed) {
+                this.explosions[ v4() ] = new Explosion(shell.point, 0);
             }
         });
 
