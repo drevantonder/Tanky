@@ -6,11 +6,15 @@ import { Sprite } from "./sprite";
 export class Tank extends Sprite {
     static ROTATE_SPEED = 4;
     static MOVEMENT_SPEED = 7;
+    static RELOAD_SPEED = 800; // how many ms it takes to reload
 
     point: Point;
     angle: number;
+    canFire: boolean;
     constructor(point = new Point(0, 0), angle = 0) {
         super(point, angle);
+
+        this.canFire = true;
     }
 
     rotateRight() {
@@ -30,6 +34,15 @@ export class Tank extends Sprite {
     }
 
     fire() {
-        return new Shell(this.point, this.angle, this);
+        if (this.canFire) {
+            this.canFire = false;
+            setTimeout(() => this.reload(), Tank.RELOAD_SPEED);
+            return new Shell(this.point, this.angle, this);
+        }
+        return null;
+    }
+
+    reload() {
+        this.canFire = true;
     }
 }

@@ -3,8 +3,9 @@ import { Tank } from "./tank";
 import { Sprite } from "./sprite";
 
 export class Shell extends Sprite {
-    static DEFAULT_SPEED = 20;
+    static DEFAULT_SPEED = 15;
     static DEFAULT_DAMAGE = 20;
+
     point: Point;
     tank: Tank;
     damage: number;

@@ -35,7 +35,9 @@ export class State {
                     break;
                 case "fire":
                     const shell = tank.fire();
-                    this.shells[ v4() ] = shell;
+                    if (shell) {
+                        this.shells[ v4() ] = shell;
+                    }
                     break;
             }
             tank.point = this.map.lockInMap(tank.point);
