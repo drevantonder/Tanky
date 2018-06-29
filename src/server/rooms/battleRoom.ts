@@ -53,6 +53,10 @@ export class State {
             }
         });
 
+        this.deleteDestroyed();
+    }
+
+    deleteDestroyed() {
         Object.entries(this.shells).forEach(([uuid, shell]) => {
             if (shell.destroyed) {
                 delete this.shells[uuid];
