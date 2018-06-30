@@ -1,4 +1,3 @@
-import { deg2Rad } from "@gamestdio/mathf/lib";
 import { Point } from "./point";
 import { Shell } from "./shell";
 import { Sprite } from "./sprite";
@@ -6,7 +5,7 @@ import { Sprite } from "./sprite";
 export class Tank extends Sprite {
     static ROTATE_SPEED = 4;
     static MOVEMENT_SPEED = 7;
-    static RELOAD_SPEED = 800; // how many ms it takes to reload
+    static RELOAD_SPEED = 400; // how many ms it takes to reload
 
     point: Point;
     angle: number;
