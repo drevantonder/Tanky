@@ -20,4 +20,9 @@ export class Sprite {
     destroy() {
         this.destroyed = true;
     }
+
+    update() {
+        return;
+    }
+
 }

@@ -8,6 +8,7 @@ import { Assets } from "./assets";
 import { ShellSprite } from "./shellSprite";
 import { StateEntitiesManager } from "./stateEntitiesManager";
 import { ExplosionSprite } from "./explosionSprite";
+import { Explosion } from "../imports/explosion";
 
 export default class GameScene extends Phaser.Scene {
   players: StateEntitiesManager<PlayerGameObject>;
@@ -25,10 +26,24 @@ export default class GameScene extends Phaser.Scene {
 
   preload() {
     Assets.assets.forEach((asset) => {
+      this.load.image(asset.texture, asset.file);
     });
   }
 
   create() {
+    this.anims.create({
+        key: "explosion",
+        frames: [
+            { key: "explosion1", frame: 1 },
+            { key: "explosion2", frame: 2 },
+            { key: "explosion3", frame: 3 },
+            { key: "explosion4", frame: 4 },
+            { key: "explosion5", frame: 5 },
+        ],
+        repeat: 0,
+        duration: Explosion.LENGTH,
+    });
+
     this.room = this.registry.get("room");
 
     this.createMap();

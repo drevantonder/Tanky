@@ -1,14 +1,13 @@
 import { Sprite } from "./sprite";
+import { Point } from "./point";
 
 export class Explosion extends Sprite {
-    static LENGTH = 10; // sim frames the explosion shows for
+    static LENGTH = 300; // time in ms this is alive
 
-    timeAlive: number = 0;
-
-    update() {
-        this.timeAlive += 1;
-        if (this.timeAlive >= Explosion.LENGTH) {
+    constructor(point: Point, angle: number) {
+        super(point, angle);
+        setTimeout(() => {
             this.destroy();
-        }
+        }, Explosion.LENGTH);
     }
 }
