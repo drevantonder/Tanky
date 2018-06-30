@@ -7,21 +7,24 @@ import { Room } from "colyseus.js";
 import { Assets } from "./assets";
 import { ShellSprite } from "./shellSprite";
 import { StateEntitiesManager } from "./stateEntitiesManager";
+import { ExplosionSprite } from "./explosionSprite";
 
 export default class GameScene extends Phaser.Scene {
   players: StateEntitiesManager<PlayerGameObject>;
   shells: StateEntitiesManager<ShellSprite>;
+  explosions: StateEntitiesManager<ShellSprite>;
+
   room: Room;
   playerController: PlayerController;
   map: Phaser.Tilemaps.Tilemap;
   player: PlayerGameObject;
+
   constructor() {
     super("main");
   }
 
   preload() {
     Assets.assets.forEach((asset) => {
-      this.load.image(asset.texture, asset.file);
     });
   }
 
@@ -36,6 +39,10 @@ export default class GameScene extends Phaser.Scene {
 
     this.shells = new StateEntitiesManager<ShellSprite>(this.room, "shells", (value) => {
       return new ShellSprite(this, value);
+    });
+
+    this.explosions = new StateEntitiesManager<ShellSprite>(this.room, "explosions", (value) => {
+      return new ExplosionSprite(this, value);
     });
 
     this.setCameraBounds();
@@ -56,6 +63,10 @@ export default class GameScene extends Phaser.Scene {
 
     this.shells.forEach((shell) => {
       shell.update(time, delta);
+    });
+
+    this.explosions.forEach((explosion) => {
+      explosion.update(time, delta);
     });
   }
 

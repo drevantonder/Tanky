@@ -71,6 +71,12 @@ export class State {
                 delete this.shells[uuid];
             }
         });
+
+        Object.entries(this.explosions).forEach(([uuid, explosion]) => {
+            if (explosion.destroyed) {
+                delete this.explosions[uuid];
+            }
+        });
     }
 }
 
