@@ -30,7 +30,7 @@
   dependencies:
     harmony-proxy "^1.0.1"
 
-"@gamestdio/timer@^1.1.7":
+"@gamestdio/timer@1.1.9", "@gamestdio/timer@^1.1.7":
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/@gamestdio/timer/-/timer-1.1.9.tgz#6335801e434904ed072b4b4337f81b0b4836f5d1"
   dependencies:

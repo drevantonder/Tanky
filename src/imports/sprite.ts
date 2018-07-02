@@ -1,5 +1,6 @@
 import { Point } from "./point";
 import { deg2Rad } from "@gamestdio/mathf/lib";
+import { Clock, nosync } from "colyseus";
 
 export class Sprite {
     static WIDTH = 64;

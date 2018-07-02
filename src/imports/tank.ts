@@ -1,6 +1,8 @@
 import { Point } from "./point";
 import { Shell } from "./shell";
 import { Sprite } from "./sprite";
+import { Clock, nosync } from "colyseus";
+import { Global } from "./global";
 
 export class Tank extends Sprite {
     static DEFUALT_ROTATE_SPEED = 4;
@@ -28,6 +30,7 @@ export class Tank extends Sprite {
         height = Tank.HEIGHT,
         recoil = Tank.DEFUALT_RECOIL,
         recoilResetTime = Tank.DEFULT_RECOIL_RESET_TIME) {
+
         super(point, angle, width, height);
 
         this.canFire = true;
@@ -57,10 +60,12 @@ export class Tank extends Sprite {
     fire() {
         if (this.canFire) {
             this.canFire = false;
-            setTimeout(() => this.reload(), this.reloadSpeed);
-            setTimeout(() => {
+
+            Global.clock.setTimeout(() => this.reload(), this.reloadSpeed);
+            Global.clock.setTimeout(() => {
                 this.point = this.point.add(this.vector.multiply(this.recoil));
             }, this.recoilResetTime);
+
             this.point = this.point.subtract(this.vector.multiply(this.recoil));
             return new Shell(this.point.add(this.vector.multiply(this.halfWidth)), this.angle, this);
         }

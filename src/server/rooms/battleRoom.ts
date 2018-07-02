@@ -4,6 +4,7 @@ import { GameMap } from "../../imports/gameMap";
 import { Shell } from "../../imports/shell";
 import { v4 } from "uuid";
 import { Explosion } from "../../imports/explosion";
+import { Global } from "../../imports/global";
 
 export class State {
     players: EntityMap<Player> = {};
@@ -83,6 +84,8 @@ export class State {
 export class BattleRoom extends Room<State> {
     public onInit(options) {
         console.log(this.roomName + " created!", options);
+
+        Global.clock = this.clock;
 
         this.setState(new State());
 
