@@ -5,5 +5,7 @@ export class ExplosionSprite extends NetworkedSprite {
     super(scene, state, "explosion1");
 
     this.play("explosion");
+
+    this.setDepth(1);
   }
 }

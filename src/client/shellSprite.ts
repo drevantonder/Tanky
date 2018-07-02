@@ -5,5 +5,6 @@ export class ShellSprite extends NetworkedSprite {
     super(scene, state, "shell");
 
     this.setScale(2);
+    this.setDepth(1);
   }
 }
