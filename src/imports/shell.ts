@@ -6,6 +6,8 @@ export class Shell extends Sprite {
     static DEFAULT_SPEED = 15;
     static DEFAULT_DAMAGE = 20;
     static DEFUALT_RANGE = 1000; // how many pixels the shell will fly
+    static DEFUALT_WIDTH = 8;
+    static DEFUALT_HEIGHT = 14;
 
     point: Point;
     tank: Tank;
@@ -21,9 +23,11 @@ export class Shell extends Sprite {
         tank: Tank,
         damage = Shell.DEFAULT_DAMAGE,
         speed = Shell.DEFAULT_SPEED,
-        range = Shell.DEFUALT_RANGE) {
+        range = Shell.DEFUALT_RANGE,
+        width = Shell.DEFUALT_WIDTH,
+        height = Shell.DEFUALT_HEIGHT) {
 
-        super(point, angle);
+        super(point, angle, width, height);
         this.tank = tank;
         this.damage = damage;
         this.speed = speed;
