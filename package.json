@@ -12,6 +12,7 @@
   "dependencies": {
     "@colyseus/monitor": "^0.1.7",
     "@gamestdio/mathf": "1.0.1",
+    "@types/uuid": "3.4.3",
     "@types/uws": "^0.13.1",
     "colyseus": "^0.9.11",
     "colyseus.js": "^0.9.7",
@@ -21,6 +22,7 @@
     "phaser": "3.10.1",
     "superagent": "^3.8.1",
     "ts-loader": "4.4.1",
+    "uuid": "3.3.0",
     "uws": "^10.148.0"
   },
   "devDependencies": {

@@ -1,13 +1,18 @@
 import { EntityMap, Room } from "colyseus";
 import { Player } from "../../imports/players";
 import { GameMap } from "../../imports/gameMap";
+import { Shell } from "../../imports/shell";
+import { v4 } from "uuid";
+import { Explosion } from "../../imports/explosion";
 
 export class State {
     players: EntityMap<Player> = {};
+    shells: EntityMap<Shell> = {};
+    explosions: EntityMap<Explosion> = {};
     map = new GameMap(50, 50);
 
     createPlayer(id: string) {
-        this.players[ id ] = new Player();
+        this.players[ id ] = new Player(id);
     }
 
     removePlayer(id: string) {
@@ -30,9 +35,48 @@ export class State {
                 case "down":
                     tank.reverse();
                     break;
+                case "fire":
+                    const shell = tank.fire();
+                    if (shell) {
+                        this.shells[ v4() ] = shell;
+                    }
+                    break;
             }
             tank.point = this.map.lockInMap(tank.point);
         }
+    }
+
+    update() {
+        Object.values(this.explosions).forEach((explosion) => {
+            explosion.update();
+        });
+
+        Object.values(this.shells).forEach((shell) => {
+            if (this.map.isInside(shell.point)) {
+                shell.update();
+            } else {
+                shell.destroy();
+            }
+            if (shell.destroyed) {
+                this.explosions[ v4() ] = new Explosion(shell.point, 0);
+            }
+        });
+
+        this.deleteDestroyed();
+    }
+
+    deleteDestroyed() {
+        Object.entries(this.shells).forEach(([uuid, shell]) => {
+            if (shell.destroyed) {
+                delete this.shells[uuid];
+            }
+        });
+
+        Object.entries(this.explosions).forEach(([uuid, explosion]) => {
+            if (explosion.destroyed) {
+                delete this.explosions[uuid];
+            }
+        });
     }
 }
 
@@ -41,6 +85,8 @@ export class BattleRoom extends Room<State> {
         console.log(this.roomName + " created!", options);
 
         this.setState(new State());
+
+        this.setSimulationInterval(() => this.update());
     }
 
     public onJoin(client) {
@@ -58,5 +104,9 @@ export class BattleRoom extends Room<State> {
 
     public onDispose() {
         console.log("Dispose " + this.roomName);
+    }
+
+    update() {
+        this.state.update();
     }
 }
