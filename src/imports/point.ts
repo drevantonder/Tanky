@@ -7,40 +7,43 @@ export class Point {
     }
 
     add(n: any) {
+        const point = new Point(this.x, this.y);
         if (typeof n === "number") {
-            this.x += n;
-            this.y += n;
-            return this;
+            point.x += n;
+            point.y += n;
+            return point;
         } else if (n instanceof Point) {
-            this.x += n.x;
-            this.y += n.y;
-            return this;
+            point.x += n.x;
+            point.y += n.y;
+            return point;
         }
         throw new Error("Method not implemented.");
     }
 
     multiply(n: any) {
+        const point = new Point(this.x, this.y);
         if (typeof n === "number") {
-            this.x *= n;
-            this.y *= n;
-            return this;
+            point.x *= n;
+            point.y *= n;
+            return point;
         } else if (n instanceof Point) {
-            this.x *= n.x;
-            this.y *= n.y;
-            return this;
+            point.x *= n.x;
+            point.y *= n.y;
+            return point;
         }
         throw new Error("Method not implemented.");
     }
 
     subtract(n: any) {
+        const point = new Point(this.x, this.y);
         if (typeof n === "number") {
-            this.x -= n;
-            this.y -= n;
-            return this;
+            point.x -= n;
+            point.y -= n;
+            return point;
         } else if (n instanceof Point) {
-            this.x -= n.x;
-            this.y -= n.y;
-            return this;
+            point.x -= n.x;
+            point.y -= n.y;
+            return point;
         }
         throw new Error("Method not implemented.");
     }

@@ -36,7 +36,7 @@ export class Shell extends Sprite {
     }
 
     update() {
-        this.point.add(this.vector.multiply(this.speed));
+        this.point = this.point.add(this.vector.multiply(this.speed));
         this.distanceTraveled += this.speed;
         if (this.distanceTraveled >= this.range) {
             this.destroy();
