@@ -28,6 +28,7 @@
     "uws": "^10.148.0"
   },
   "devDependencies": {
+    "@types/matter-js": "0.10.1",
     "browserify": "^14.4.0",
     "copy-webpack-plugin": "4.5.1",
     "ts-node": "^5.0.1",

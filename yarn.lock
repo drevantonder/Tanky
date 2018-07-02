@@ -44,6 +44,10 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
 
+"@types/matter-js@0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.10.1.tgz#f7d82f3a28d6e59aae63f8ae285303606193a0c1"
+
 "@types/node@*":
   version "10.3.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.5.tgz#8423cdf6e6fb83433e489900d7600d3b61c8260c"
