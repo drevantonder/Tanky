@@ -39,7 +39,7 @@ export class GameMap {
     generate() {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                this.createTile(new Point(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE));
+                this.createTile(new Point(x * Constants.TILE.TILE_SIZE, y * Constants.TILE.TILE_SIZE));
             }
         }
     }
