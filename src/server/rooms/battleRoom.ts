@@ -19,16 +19,16 @@ export class State {
         Global.engine.world.gravity.y = 0;
         Global.engine.world.gravity.scale = 0;
 
-        this.map = new GameMap(50, 50);
+        this.map = new GameMap(15, 15);
 
         Global.engine.world.bounds = {
             min: {
-                x: -21,
-                y: -21,
+                x: 0,
+                y: 0,
             },
             max: {
-                x: this.map.widthInPixels + 21,
-                y: this.map.heightInPixels + 21,
+                x: this.map.widthInPixels,
+                y: this.map.heightInPixels,
             },
         };
     }

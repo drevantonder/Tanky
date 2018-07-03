@@ -20,8 +20,18 @@ export class GameMap {
     }
 
     createBounds() {
-        World.add(Global.engine.world, Bodies.rectangle(0, 0, 20, this.heightInPixels, { isStatic: true }));
-        World.add(Global.engine.world, Bodies.rectangle(0, 0, this.widthInPixels, 20, { isStatic: true }));
+        World.add(Global.engine.world,
+            Bodies.rectangle(0, this.heightInPixels / 2, 20, this.heightInPixels, { isStatic: true }),
+        );
+        World.add(Global.engine.world,
+            Bodies.rectangle(this.widthInPixels / 2, 0, this.widthInPixels, 20, { isStatic: true }),
+        );
+        World.add(Global.engine.world,
+            Bodies.rectangle(this.widthInPixels, this.heightInPixels / 2, 20, this.heightInPixels, { isStatic: true }),
+        );
+        World.add(Global.engine.world,
+            Bodies.rectangle(this.widthInPixels / 2, this.heightInPixels, this.widthInPixels, 20, { isStatic: true }),
+        );
     }
 
     get widthInPixels() {
