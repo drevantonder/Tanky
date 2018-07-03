@@ -2,8 +2,8 @@ import { Point } from "./point";
 import { Shell } from "./shell";
 import { Sprite } from "./sprite";
 import { Global } from "./global";
-import { Constants } from "../../imports/constants";
 import { Body, Vector, Bodies } from "matter-js";
+import { Constants } from "../../../imports/constants";
 
 export class Tank extends Sprite {
 

@@ -3,7 +3,7 @@ import { deg2Rad } from "@gamestdio/mathf/lib";
 import { Body, Bodies, World } from "matter-js";
 import { nosync } from "colyseus";
 import { Global } from "./global";
-import { Constants } from "../../imports/constants";
+import { Constants } from "../../../imports/constants";
 
 export class Sprite {
     point: Point;

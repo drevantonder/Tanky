@@ -3,7 +3,7 @@ import { Point } from "./point";
 import { clamp } from "@gamestdio/mathf/lib";
 import { Bodies, World } from "matter-js";
 import { Global } from "./global";
-import { Constants } from "../../imports/constants";
+import { Constants } from "../../../imports/constants";
 
 export class GameMap {
     width: number;

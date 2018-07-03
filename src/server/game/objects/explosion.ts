@@ -1,6 +1,6 @@
 import { Sprite } from "./sprite";
 import { Point } from "./point";
-import { Constants } from "../../imports/constants";
+import { Constants } from "../../../imports/constants";
 
 export class Explosion extends Sprite {
     constructor(point: Point, angle: number) {
