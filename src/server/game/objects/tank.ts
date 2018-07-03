@@ -3,6 +3,7 @@ import { Sprite } from "./sprite";
 import { Global } from "./global";
 import { Body, Vector, Bodies } from "matter-js";
 import { Constants } from "../../../imports/constants";
+import { deg2Rad } from "@gamestdio/mathf/lib";
 
 export class Tank extends Sprite {
 
@@ -37,11 +38,11 @@ export class Tank extends Sprite {
     }
 
     rotateRight() {
-        Body.rotate(this.body, this.rotateSpeed);
+        Body.rotate(this.body, this.rotateSpeed * deg2Rad);
     }
 
     rotateLeft() {
-        Body.rotate(this.body, -this.rotateSpeed);
+        Body.rotate(this.body, -this.rotateSpeed * deg2Rad);
     }
 
     forward() {

@@ -67,8 +67,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    console.log(this.room.state);
-
     if (this.playerController) {
       this.playerController.update(time, delta);
     }
