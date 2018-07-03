@@ -4,8 +4,9 @@ import { Body, Bodies, World } from "matter-js";
 import { nosync } from "colyseus";
 import { Global } from "./global";
 import { Constants } from "../../../imports/constants";
+import { ISerializable } from "./serializable";
 
-export class Sprite {
+export class Sprite implements ISerializable {
     point: Point;
     angle: number;
     destroyed: boolean = false;
@@ -56,4 +57,11 @@ export class Sprite {
         this.angle = this.body.angle;
     }
 
+    toJSON() {
+        return {
+            x: this.body.position.x,
+            y: this.body.position.y,
+            angle: this.body.angle,
+        };
+    }
 }

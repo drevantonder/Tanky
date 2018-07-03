@@ -5,11 +5,13 @@ import { Shell } from "./objects/shell";
 import { Explosion } from "./objects/explosion";
 import { GameMap } from "./objects/gameMap";
 import { Global } from "./objects/global";
+import { EntityMap2 } from "./objects/EntityMap2";
+import { ISerializable } from "./objects/serializable";
 
-export class Game {
-    players = new Map<string, Player>();
-    shells = new Map<string, Shell>();
-    explosions = new Map<string, Explosion>();
+export class Game implements ISerializable {
+    players = new EntityMap2<Player>();
+    shells = new EntityMap2<Shell>();
+    explosions = new EntityMap2<Explosion>();
     map: GameMap;
 
     constructor() {
@@ -106,7 +108,9 @@ export class Game {
         });
     }
 
-    get state() {
-        return {};
+    toJSON() {
+        return {
+            players: this.players.toJSON(),
+        };
     }
 }

@@ -32,6 +32,6 @@ export class BattleRoom extends Room<any> {
     }
 
     update() {
-        this.setState(this.game.state);
+        this.setState(this.game.toJSON());
     }
 }
