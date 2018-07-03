@@ -1,17 +1,11 @@
 import { Point } from "./point";
 import { Shell } from "./shell";
 import { Sprite } from "./sprite";
-import { Clock, nosync } from "colyseus";
 import { Global } from "./global";
+import { Constants } from "../../imports/constants";
+import { Body, Vector, Bodies } from "matter-js";
 
 export class Tank extends Sprite {
-    static DEFUALT_ROTATE_SPEED = 4;
-    static DEFUALT_MOVEMENT_SPEED = 7;
-    static DEFUALT_RELOAD_SPEED = 400; // how many ms it takes to reload
-    static DEFUALT_RECOIL = 10;
-    static DEFULT_RECOIL_RESET_TIME = 100; // ms
-    static DEFUALT_WIDTH = 42;
-    static DEFUALT_HEIGHT = 46;
 
     canFire: boolean;
     movementSpeed: number;
@@ -21,17 +15,18 @@ export class Tank extends Sprite {
     recoilResetTime: number;
 
     constructor(
-        point = new Point(0, 0),
+        point = new Point(300, 300),
         angle = 0,
-        movementSpeed = Tank.DEFUALT_MOVEMENT_SPEED,
-        rotateSpeed = Tank.DEFUALT_ROTATE_SPEED,
-        reloadSpeed = Tank.DEFUALT_RELOAD_SPEED,
-        width = Tank.WIDTH,
-        height = Tank.HEIGHT,
-        recoil = Tank.DEFUALT_RECOIL,
-        recoilResetTime = Tank.DEFULT_RECOIL_RESET_TIME) {
+        movementSpeed = Constants.TANK.DEFUALT_MOVEMENT_SPEED,
+        rotateSpeed = Constants.TANK.DEFUALT_ROTATE_SPEED,
+        reloadSpeed = Constants.TANK.DEFUALT_RELOAD_SPEED,
+        width = Constants.TANK.DEFUALT_WIDTH,
+        height = Constants.TANK.DEFUALT_HEIGHT,
+        recoil = Constants.TANK.DEFUALT_RECOIL,
+        recoilResetTime = Constants.TANK.DEFULT_RECOIL_RESET_TIME) {
 
-        super(point, angle, width, height);
+        super(point, angle, width, height,
+            Bodies.rectangle(point.x, point.y, width, height));
 
         this.canFire = true;
         this.movementSpeed = movementSpeed;
@@ -39,22 +34,28 @@ export class Tank extends Sprite {
         this.reloadSpeed = reloadSpeed;
         this.recoil = recoil;
         this.recoilResetTime = recoilResetTime;
+
+        this.body.frictionAir = 0.5;
+        Body.setMass(this.body, 5000);
     }
 
     rotateRight() {
-        this.angle += this.rotateSpeed;
+        Body.rotate(this.body, this.rotateSpeed);
     }
 
     rotateLeft() {
-        this.angle -= this.rotateSpeed;
+        Body.rotate(this.body, -this.rotateSpeed);
     }
 
     forward() {
-        this.point = this.point.add(this.vector.multiply(this.movementSpeed));
+        const velocity = this.vector.multiply(this.movementSpeed);
+        Body.setVelocity(this.body, Vector.create(velocity.x, velocity.y));
+        // this.point = this.point.add(this.vector.multiply(this.movementSpeed));
     }
 
     reverse() {
-        this.point = this.point.subtract(this.vector.multiply(this.movementSpeed));
+        const velocity = this.vector.multiply(-this.movementSpeed);
+        Body.setVelocity(this.body, Vector.create(velocity.x, velocity.y));
     }
 
     fire() {
