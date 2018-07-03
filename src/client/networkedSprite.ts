@@ -11,13 +11,13 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
     stateGetter: () => any;
 
     constructor(scene: Phaser.Scene, state, texture: string) {
-        super(scene, state.point.x, state.point.y, texture);
+        super(scene, state.x, state.y, texture);
 
         this.asset = Assets.assets.get(texture);
         this.state = state;
         this.angle = this.state.angle + this.asset.textureAngleDifference;
-        this.x = this.state.point.x;
-        this.y = this.state.point.y;
+        this.x = this.state.x;
+        this.y = this.state.y;
 
         this.scene.add.existing(this);
     }
@@ -25,8 +25,8 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
     update(time = 0, delta = 0) {
         this.state = this.stateGetter();
 
-        this.x = lerp(this.x, this.state.point.x, NetworkedSprite.INTERPOLATION_CONSTANT);
-        this.y = lerp(this.y, this.state.point.y, NetworkedSprite.INTERPOLATION_CONSTANT);
+        this.x = lerp(this.x, this.state.x, NetworkedSprite.INTERPOLATION_CONSTANT);
+        this.y = lerp(this.y, this.state.y, NetworkedSprite.INTERPOLATION_CONSTANT);
         this.angle = lerpAngle(
                 this.angle,
                 this.state.angle + this.asset.textureAngleDifference,

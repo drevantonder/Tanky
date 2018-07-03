@@ -3,10 +3,17 @@ import { Engine } from "matter-js";
 import { Player } from "./objects/players";
 import { Shell } from "./objects/shell";
 import { Explosion } from "./objects/explosion";
-import { GameMap } from "./objects/gameMap";
+import { GameMap, IGameMapState } from "./objects/gameMap";
 import { Global } from "./objects/global";
 import { EntityMap2 } from "./objects/EntityMap2";
 import { ISerializable } from "./objects/serializable";
+
+export interface IGameState {
+    players: {};
+    shells: {};
+    explosions: {};
+    map: IGameMapState;
+}
 
 export class Game implements ISerializable {
     players = new EntityMap2<Player>();
@@ -35,16 +42,16 @@ export class Game implements ISerializable {
     }
 
     createPlayer(id: string) {
-        this.players[ id ] = new Player(id);
+        this.players.set(id, new Player(id));
     }
 
     removePlayer(id: string) {
-        delete this.players[ id ];
+        this.players.delete(id);
     }
 
     moveTank(id: string, movement: any) {
         if (movement.input) {
-            const tank = this.players[ id ].tank;
+            const tank = this.players.get(id).tank;
             switch (movement.input) {
                 case "right":
                     tank.rotateRight();
@@ -61,7 +68,7 @@ export class Game implements ISerializable {
                 case "fire":
                     const shell = tank.fire();
                     if (shell) {
-                        this.shells[ v4() ] = shell;
+                        this.shells.set(v4(), shell);
                     }
                     break;
             }
@@ -87,7 +94,7 @@ export class Game implements ISerializable {
                 shell.destroy();
             }
             if (shell.destroyed) {
-                this.explosions[ v4() ] = new Explosion(shell.point, 0);
+                this.explosions.set(v4(), new Explosion(shell.point, 0));
             }
         });
 
@@ -97,20 +104,27 @@ export class Game implements ISerializable {
     deleteDestroyed() {
         this.shells.forEach((shell, uuid) => {
             if (shell.destroyed) {
-                delete this.shells[uuid];
+                this.shells.delete(uuid);
             }
         });
 
         this.shells.forEach((explosion, uuid) => {
             if (explosion.destroyed) {
-                delete this.explosions[uuid];
+                this.explosions.delete(uuid);
             }
         });
     }
 
-    toJSON() {
+    toJSON(): IGameState {
         return {
             players: this.players.toJSON(),
+            shells: this.shells.toJSON(),
+            explosions: this.explosions.toJSON(),
+            map: this.map.toJSON(),
         };
+    }
+
+    get state() {
+        return this.toJSON();
     }
 }

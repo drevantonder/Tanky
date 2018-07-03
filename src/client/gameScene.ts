@@ -8,13 +8,14 @@ import { ShellSprite } from "./shellSprite";
 import { StateEntitiesManager } from "./stateEntitiesManager";
 import { ExplosionSprite } from "./explosionSprite";
 import { Constants } from "../imports/constants";
+import { IGameState } from "../server/game/game";
 
 export default class GameScene extends Phaser.Scene {
   players: StateEntitiesManager<PlayerGameObject>;
   shells: StateEntitiesManager<ShellSprite>;
   explosions: StateEntitiesManager<ShellSprite>;
 
-  room: Room;
+  room: Room<IGameState>;
   playerController: PlayerController;
   map: Phaser.Tilemaps.Tilemap;
   player: PlayerGameObject;
@@ -67,6 +68,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
+    console.log(this.room.state);
+
     if (this.playerController) {
       this.playerController.update(time, delta);
     }

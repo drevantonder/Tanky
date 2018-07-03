@@ -4,11 +4,21 @@ import { clamp } from "@gamestdio/mathf/lib";
 import { Bodies, World } from "matter-js";
 import { Global } from "./global";
 import { Constants } from "../../../imports/constants";
+import { ISerializable } from "./serializable";
+import { EntityMap2 } from "./EntityMap2";
 
-export class GameMap {
+export interface IGameMapState {
     width: number;
     height: number;
-    tiles = {};
+    widthInPixels: number;
+    heightInPixels: number;
+    tiles: {};
+}
+
+export class GameMap implements ISerializable {
+    width: number;
+    height: number;
+    tiles = new EntityMap2<Tile>();
 
     constructor(width: number, height: number) {
         this.width = width;
@@ -76,5 +86,15 @@ export class GameMap {
         }
 
         return true;
+    }
+
+    toJSON(): IGameMapState {
+        return {
+            width: this.width,
+            height: this.height,
+            widthInPixels: this.widthInPixels,
+            heightInPixels: this.heightInPixels,
+            tiles: this.tiles.toJSON(),
+        };
     }
 }

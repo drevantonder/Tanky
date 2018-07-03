@@ -1,9 +1,32 @@
-import { Game } from "../game/game";
-import { Room } from "colyseus";
+import { Game, IGameState } from "../game/game";
+import { Room, nosync } from "colyseus";
 import { Global } from "../game/objects/global";
 
-export class BattleRoom extends Room<any> {
+export class State implements IGameState {
+    players: {};
+    shells: {};
+    explosions: {};
+    map;
+
+    @nosync
     game: Game;
+
+    constructor() {
+        this.game = new Game();
+    }
+
+    update() {
+        this.game.update();
+
+        const state = this.game.toJSON();
+        this.players = state.players;
+        this.shells = state.shells;
+        this.explosions = state.explosions;
+        this.map = state.map;
+    }
+}
+
+export class BattleRoom extends Room<State> {
     public onInit(options) {
         console.log(this.roomName + " created!", options);
 
@@ -11,20 +34,20 @@ export class BattleRoom extends Room<any> {
 
         this.setSimulationInterval(() => this.update());
 
-        this.game = new Game();
+        this.setState(new State());
     }
 
     public onJoin(client) {
-        this.state.createPlayer(client.sessionId);
+        this.state.game.createPlayer(client.sessionId);
     }
 
     public onLeave(client) {
-        this.state.removePlayer(client.sessionId);
+        this.state.game.removePlayer(client.sessionId);
     }
 
     public onMessage(client, data) {
         console.log(this.roomName + " received message from", client.sessionId, ":", data);
-        this.state.moveTank(client.sessionId, data);
+        this.state.game.moveTank(client.sessionId, data);
     }
 
     public onDispose() {
@@ -32,6 +55,6 @@ export class BattleRoom extends Room<any> {
     }
 
     update() {
-        this.setState(this.game.toJSON());
+        this.state.update();
     }
 }
