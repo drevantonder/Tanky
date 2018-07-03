@@ -1,6 +1,8 @@
 import { Point } from "./point";
 import { deg2Rad } from "@gamestdio/mathf/lib";
-import { Clock, nosync } from "colyseus";
+import { Body, Bodies, World } from "matter-js";
+import { nosync } from "colyseus";
+import { Global } from "./global";
 
 export class Sprite {
     static WIDTH = 64;
@@ -12,12 +14,24 @@ export class Sprite {
     width: number;
     height: number;
 
-    constructor(point = new Point(0, 0), angle = 0, width = Sprite.WIDTH, height = Sprite.HEIGHT) {
+    @nosync
+    body: Body;
+
+    constructor(
+        point = new Point(0, 0),
+        angle = 0,
+        width = Sprite.WIDTH,
+        height = Sprite.HEIGHT,
+        body = Bodies.rectangle(400, 200, 80, 80),
+    ) {
         this.point = point;
         this.angle = angle;
 
         this.width = width;
         this.height = height;
+
+        this.body = body;
+        World.add(Global.engine.world, this.body);
     }
 
     get halfWidth() {

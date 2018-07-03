@@ -1,5 +1,4 @@
 import { Tank } from "./tank";
-import { nosync, Clock} from "colyseus";
 
 export class Player {
     name = "Andre";

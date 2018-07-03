@@ -5,12 +5,17 @@ import { Shell } from "../../imports/shell";
 import { v4 } from "uuid";
 import { Explosion } from "../../imports/explosion";
 import { Global } from "../../imports/global";
+import { Engine } from "matter-js";
 
 export class State {
     players: EntityMap<Player> = {};
     shells: EntityMap<Shell> = {};
     explosions: EntityMap<Explosion> = {};
     map = new GameMap(50, 50);
+
+    constructor() {
+        Global.engine = Engine.create();
+    }
 
     createPlayer(id: string) {
         this.players[ id ] = new Player(id);
@@ -48,6 +53,10 @@ export class State {
     }
 
     update() {
+        Engine.update(Global.engine, 1000 / 60);
+
+        console.log(Global.engine.world.bodies);
+
         Object.values(this.explosions).forEach((explosion) => {
             explosion.update();
         });
