@@ -65,7 +65,7 @@ export class GameMap implements ISerializable {
     }
 
     createTile(point: Point) {
-        this.tiles[point.toString()] = new Tile(point);
+        this.tiles.set(point.toString(), new Tile(point));
     }
 
     isInside(point: Point) {
