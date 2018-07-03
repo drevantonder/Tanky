@@ -1,13 +1,12 @@
 import { Sprite } from "./sprite";
 import { Point } from "./point";
+import { Constants } from "../../imports/constants";
 
 export class Explosion extends Sprite {
-    static LENGTH = 300; // time in ms this is alive
-
     constructor(point: Point, angle: number) {
         super(point, angle);
         setTimeout(() => {
             this.destroy();
-        }, Explosion.LENGTH);
+        }, Constants.EXPLOSION.LENGTH);
     }
 }

@@ -3,11 +3,9 @@ import { deg2Rad } from "@gamestdio/mathf/lib";
 import { Body, Bodies, World } from "matter-js";
 import { nosync } from "colyseus";
 import { Global } from "./global";
+import { Constants } from "../../imports/constants";
 
 export class Sprite {
-    static WIDTH = 64;
-    static HEIGHT = 64;
-
     point: Point;
     angle: number;
     destroyed: boolean = false;
@@ -20,8 +18,8 @@ export class Sprite {
     constructor(
         point = new Point(0, 0),
         angle = 0,
-        width = Sprite.WIDTH,
-        height = Sprite.HEIGHT,
+        width = Constants.SPRITE.DEFUALT_WIDTH,
+        height = Constants.SPRITE.DEFUALT_HEIGHT,
         body = Bodies.rectangle(400, 200, 80, 80),
     ) {
         this.point = point;
@@ -53,7 +51,9 @@ export class Sprite {
     }
 
     update() {
-        return;
+        this.point.x = this.body.position.x;
+        this.point.y = this.body.position.y;
+        this.angle = this.body.angle;
     }
 
 }

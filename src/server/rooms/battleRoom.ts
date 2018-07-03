@@ -1,20 +1,36 @@
 import { EntityMap, Room } from "colyseus";
-import { Player } from "../../imports/players";
-import { GameMap } from "../../imports/gameMap";
-import { Shell } from "../../imports/shell";
+import { Player } from "../objects/players";
+import { GameMap } from "../../server/objects/gameMap";
+import { Shell } from "../objects/shell";
 import { v4 } from "uuid";
-import { Explosion } from "../../imports/explosion";
-import { Global } from "../../imports/global";
+import { Explosion } from "../../server/objects/explosion";
+import { Global } from "../objects/global";
 import { Engine } from "matter-js";
 
 export class State {
     players: EntityMap<Player> = {};
     shells: EntityMap<Shell> = {};
     explosions: EntityMap<Explosion> = {};
-    map = new GameMap(50, 50);
+    map: GameMap;
 
     constructor() {
         Global.engine = Engine.create();
+        Global.engine.world.gravity.x = 0;
+        Global.engine.world.gravity.y = 0;
+        Global.engine.world.gravity.scale = 0;
+
+        this.map = new GameMap(50, 50);
+
+        Global.engine.world.bounds = {
+            min: {
+                x: -21,
+                y: -21,
+            },
+            max: {
+                x: this.map.widthInPixels + 21,
+                y: this.map.heightInPixels + 21,
+            },
+        };
     }
 
     createPlayer(id: string) {
@@ -55,10 +71,12 @@ export class State {
     update() {
         Engine.update(Global.engine, 1000 / 60);
 
-        console.log(Global.engine.world.bodies);
-
         Object.values(this.explosions).forEach((explosion) => {
             explosion.update();
+        });
+
+        Object.values(this.players).forEach((player) => {
+            player.tank.update();
         });
 
         Object.values(this.shells).forEach((shell) => {

@@ -1,6 +1,9 @@
 import { Tile } from "./tile";
 import { Point } from "./point";
 import { clamp } from "@gamestdio/mathf/lib";
+import { Bodies, World } from "matter-js";
+import { Global } from "./global";
+import { Constants } from "../../imports/constants";
 
 export class GameMap {
     width: number;
@@ -12,14 +15,21 @@ export class GameMap {
         this.height = height;
 
         this.generate();
+
+        this.createBounds();
+    }
+
+    createBounds() {
+        World.add(Global.engine.world, Bodies.rectangle(0, 0, 20, this.heightInPixels, { isStatic: true }));
+        World.add(Global.engine.world, Bodies.rectangle(0, 0, this.widthInPixels, 20, { isStatic: true }));
     }
 
     get widthInPixels() {
-        return this.width * Tile.TILE_SIZE;
+        return this.width * Constants.TILE.TILE_SIZE;
     }
 
     get heightInPixels() {
-        return this.height * Tile.TILE_SIZE;
+        return this.height * Constants.TILE.TILE_SIZE;
     }
 
     lockInMap(point: Point) {
