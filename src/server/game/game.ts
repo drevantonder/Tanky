@@ -72,7 +72,7 @@ export class Game implements ISerializable {
                     }
                     break;
             }
-            tank.point = this.map.lockInMap(tank.point);
+            // tank.point = this.map.lockInMap(tank.point);
         }
     }
 

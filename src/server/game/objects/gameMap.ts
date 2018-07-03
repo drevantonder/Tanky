@@ -1,7 +1,6 @@
 import { Tile } from "./tile";
-import { Point } from "./point";
 import { clamp } from "@gamestdio/mathf/lib";
-import { Bodies, World } from "matter-js";
+import { Bodies, World, Vector } from "matter-js";
 import { Global } from "./global";
 import { Constants } from "../../../imports/constants";
 import { ISerializable } from "./serializable";
@@ -52,36 +51,32 @@ export class GameMap implements ISerializable {
         return this.height * Constants.TILE.TILE_SIZE;
     }
 
-    lockInMap(point: Point) {
-        return new Point(clamp(point.x, 0, this.widthInPixels), clamp(point.y, 0, this.heightInPixels));
-    }
-
     generate() {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                this.createTile(new Point(x * Constants.TILE.TILE_SIZE, y * Constants.TILE.TILE_SIZE));
+                this.createTile(Vector.create(x * Constants.TILE.TILE_SIZE, y * Constants.TILE.TILE_SIZE));
             }
         }
     }
 
-    createTile(point: Point) {
-        this.tiles.set(point.toString(), new Tile(point));
+    createTile(position: Vector) {
+        this.tiles.set(position.toString(), new Tile(position));
     }
 
-    isInside(point: Point) {
-        if (point.x > this.widthInPixels) {
+    isInside(position: Vector) {
+        if (position.x > this.widthInPixels) {
             return false;
         }
 
-        if (point.x < 0) {
+        if (position.x < 0) {
             return false;
         }
 
-        if (point.y > this.heightInPixels) {
+        if (position.y > this.heightInPixels) {
             return false;
         }
 
-        if (point.y < 0) {
+        if (position.y < 0) {
             return false;
         }
 

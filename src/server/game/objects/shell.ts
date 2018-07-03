@@ -1,11 +1,9 @@
-import { Point } from "./point";
 import { Tank } from "./tank";
 import { Sprite } from "./sprite";
-import { Bodies } from "matter-js";
+import { Bodies, Vector } from "matter-js";
 import { Constants } from "../../../imports/constants";
 
 export class Shell extends Sprite {
-    point: Point;
     tank: Tank;
     damage: number;
     speed: number;
@@ -14,7 +12,7 @@ export class Shell extends Sprite {
     distanceTraveled: number;
 
     constructor(
-        point = new Point(0, 0),
+        position: Vector,
         angle: number,
         tank: Tank,
         damage = Constants.SHELL.DEFAULT_DAMAGE,
@@ -23,7 +21,7 @@ export class Shell extends Sprite {
         width = Constants.SHELL.DEFUALT_WIDTH,
         height = Constants.SHELL.DEFUALT_HEIGHT) {
 
-        super(point, angle, width, height, Bodies.rectangle(point.x, point.y, width, height));
+        super(Bodies.rectangle(position.x, position.y, width, height));
         this.tank = tank;
         this.damage = damage;
         this.speed = speed;
@@ -32,7 +30,7 @@ export class Shell extends Sprite {
     }
 
     update() {
-        this.point = this.point.add(this.vector.multiply(this.speed));
+        // this.point = this.point.add(Vector.mult(this.vector, this.speed));
         this.distanceTraveled += this.speed;
         if (this.distanceTraveled >= this.range) {
             this.destroy();

@@ -1,10 +1,10 @@
 import { Sprite } from "./sprite";
-import { Point } from "./point";
 import { Constants } from "../../../imports/constants";
+import { Vector, Bodies } from "matter-js";
 
 export class Explosion extends Sprite {
-    constructor(point: Point, angle: number) {
-        super(point, angle);
+    constructor(position: Vector, angle: number) {
+        super(Bodies.circle(position.x, position.y, 20));
         setTimeout(() => {
             this.destroy();
         }, Constants.EXPLOSION.LENGTH);
