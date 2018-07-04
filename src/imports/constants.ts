@@ -22,6 +22,7 @@ export class Constants {
         DEFUALT_RANGE: 1000, // how many pixels the shell will fly
         DEFUALT_WIDTH: 8, // px
         DEFUALT_HEIGHT: 14, // px
+        DEFUALT_MASS: 19, // kg
     };
     static TILE = {
         TILE_SIZE: 64,

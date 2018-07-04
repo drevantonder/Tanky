@@ -1,6 +1,6 @@
 import { Tank } from "./tank";
 import { Sprite } from "./sprite";
-import { Bodies, Vector } from "matter-js";
+import { Bodies, Vector, Body } from "matter-js";
 import { Constants } from "../../../imports/constants";
 
 export class Shell extends Sprite {
@@ -27,6 +27,8 @@ export class Shell extends Sprite {
         this.speed = speed;
         this.range = range;
         this.distanceTraveled = 0;
+
+        Body.setMass(this.body, Constants.SHELL.DEFUALT_MASS);
     }
 
     update() {
