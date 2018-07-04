@@ -27,7 +27,7 @@ export class Game implements ISerializable {
         Global.engine.world.gravity.y = 0;
         Global.engine.world.gravity.scale = 0;
 
-        this.map = new GameMap(15, 15);
+        this.map = new GameMap(20, 20);
 
         Global.engine.world.bounds = {
             min: {
@@ -79,22 +79,22 @@ export class Game implements ISerializable {
     update() {
         Engine.update(Global.engine, 1000 / 60);
 
-        Object.values(this.explosions).forEach((explosion) => {
+        this.explosions.forEach((explosion) => {
             explosion.update();
         });
 
-        Object.values(this.players).forEach((player) => {
+        this.players.forEach((player) => {
             player.tank.update();
         });
 
-        Object.values(this.shells).forEach((shell) => {
-            if (this.map.isInside(shell.point)) {
+        this.shells.forEach((shell) => {
+            if (this.map.isInside(shell.body.position)) {
                 shell.update();
             } else {
                 shell.destroy();
             }
             if (shell.destroyed) {
-                this.explosions.set(v4(), new Explosion(shell.point, 0));
+                this.explosions.set(v4(), new Explosion(shell.body.position, 0));
             }
         });
 
