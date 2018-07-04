@@ -1,16 +1,16 @@
-import { Point } from "./point";
 import { ISerializable } from "./serializable";
+import { Vector } from "matter-js";
 
 export class Tile implements ISerializable {
-    point: Point;
-    constructor(point: Point) {
-        this.point = point;
+    position: Vector;
+    constructor(position: Vector) {
+        this.position = position;
     }
 
     toJSON() {
         return {
-            x: this.point.x,
-            y: this.point.y,
+            x: this.position.x,
+            y: this.position.y,
         };
     }
 }
