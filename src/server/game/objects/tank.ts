@@ -34,7 +34,7 @@ export class Tank extends Sprite {
         this.recoilResetTime = recoilResetTime;
 
         this.body.frictionAir = 0.5;
-        Body.setMass(this.body, 5000);
+        Body.setMass(this.body, Constants.TANK.DEFUALT_MASS);
     }
 
     rotateRight() {

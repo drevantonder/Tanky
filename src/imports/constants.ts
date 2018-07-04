@@ -11,6 +11,7 @@ export class Constants {
         DEFULT_RECOIL_RESET_TIME: 100, // ms
         DEFUALT_WIDTH: 44, // px 42 + a margin
         DEFUALT_HEIGHT: 48, // px 46 + a margin
+        DEFUALT_MASS: 54000, // kg
     };
     static EXPLOSION = {
         LENGTH: 300, // time in ms this is alive
