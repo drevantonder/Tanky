@@ -1,5 +1,5 @@
 import * as Phaser from "phaser";
-import { lerp, lerpUnclamped, clamp, rad2Deg, deg2Rad, lerpAngle} from "@gamestdio/mathf/lib";
+import { lerp, deg2Rad} from "@gamestdio/mathf/lib";
 import { Assets } from "./assets";
 import { Asset } from "./asset";
 import { lerpRadians } from "../imports/utils";
@@ -16,7 +16,7 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
 
         this.asset = Assets.assets.get(texture);
         this.state = state;
-        this.rotation = this.state.angle;
+        this.rotation = this.state.angle + this.asset.textureAngleDifference * deg2Rad;
         this.x = this.state.x;
         this.y = this.state.y;
 
@@ -30,7 +30,7 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
         this.y = lerp(this.y, this.state.y, NetworkedSprite.INTERPOLATION_CONSTANT);
         this.rotation = lerpRadians(
                 this.rotation,
-                this.state.angle,
+                this.state.angle + this.asset.textureAngleDifference * deg2Rad,
                 NetworkedSprite.INTERPOLATION_CONSTANT);
     }
 }
