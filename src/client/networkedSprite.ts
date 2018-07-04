@@ -29,8 +29,8 @@ export abstract class NetworkedSprite extends Phaser.GameObjects.Sprite {
         this.x = lerp(this.x, this.state.x, NetworkedSprite.INTERPOLATION_CONSTANT);
         this.y = lerp(this.y, this.state.y, NetworkedSprite.INTERPOLATION_CONSTANT);
         this.rotation = lerpRadians(
-                this.rotation * rad2Deg,
-                this.state.angle * rad2Deg,
-                NetworkedSprite.INTERPOLATION_CONSTANT) * deg2Rad;
+                this.rotation,
+                this.state.angle,
+                NetworkedSprite.INTERPOLATION_CONSTANT);
     }
 }
