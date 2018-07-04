@@ -16,17 +16,17 @@ export class Tank extends Sprite {
 
     constructor(
         position = Vector.create(300, 300),
-        movementSpeed = Constants.TANK.DEFUALT_MOVEMENT_SPEED,
-        rotateSpeed = Constants.TANK.DEFUALT_ROTATE_SPEED,
-        reloadSpeed = Constants.TANK.DEFUALT_RELOAD_SPEED,
-        width = Constants.TANK.DEFUALT_WIDTH,
-        height = Constants.TANK.DEFUALT_HEIGHT,
-        recoil = Constants.TANK.DEFUALT_RECOIL,
+        movementSpeed = Constants.TANK.DEFAULT_MOVEMENT_SPEED,
+        rotateSpeed = Constants.TANK.DEFAULT_ROTATE_SPEED,
+        reloadSpeed = Constants.TANK.DEFAULT_RELOAD_SPEED,
+        width = Constants.TANK.DEFAULT_WIDTH,
+        height = Constants.TANK.DEFAULT_HEIGHT,
+        recoil = Constants.TANK.DEFAULT_RECOIL,
         recoilResetTime = Constants.TANK.DEFULT_RECOIL_RESET_TIME) {
 
         super({
             body: Bodies.rectangle(position.x, position.y, width, height),
-            mass: Constants.TANK.DEFUALT_MASS,
+            mass: Constants.TANK.DEFAULT_MASS,
         });
 
         this.canFire = true;

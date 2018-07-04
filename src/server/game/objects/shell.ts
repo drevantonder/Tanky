@@ -17,13 +17,13 @@ export class Shell extends Sprite {
         tank: Tank,
         damage = Constants.SHELL.DEFAULT_DAMAGE,
         speed = Constants.SHELL.DEFAULT_SPEED,
-        range = Constants.SHELL.DEFUALT_RANGE,
-        width = Constants.SHELL.DEFUALT_WIDTH,
-        height = Constants.SHELL.DEFUALT_HEIGHT) {
+        range = Constants.SHELL.DEFAULT_RANGE,
+        width = Constants.SHELL.DEFAULT_WIDTH,
+        height = Constants.SHELL.DEFAULT_HEIGHT) {
 
         super({
             body: Bodies.rectangle(position.x, position.y, width, height),
-            mass: Constants.SHELL.DEFUALT_MASS,
+            mass: Constants.SHELL.DEFAULT_MASS,
         });
 
         this.tank = tank;
