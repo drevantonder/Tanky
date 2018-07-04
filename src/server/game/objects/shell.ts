@@ -21,14 +21,16 @@ export class Shell extends Sprite {
         width = Constants.SHELL.DEFUALT_WIDTH,
         height = Constants.SHELL.DEFUALT_HEIGHT) {
 
-        super(Bodies.rectangle(position.x, position.y, width, height));
+        super({
+            body: Bodies.rectangle(position.x, position.y, width, height),
+            mass: Constants.SHELL.DEFUALT_MASS,
+        });
+
         this.tank = tank;
         this.damage = damage;
         this.speed = speed;
         this.range = range;
         this.distanceTraveled = 0;
-
-        Body.setMass(this.body, Constants.SHELL.DEFUALT_MASS);
     }
 
     update() {

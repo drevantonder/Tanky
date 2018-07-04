@@ -1,17 +1,29 @@
 import { Body, Bodies, World, Vector } from "matter-js";
 import { Global } from "./global";
-import { Constants } from "../../../imports/constants";
 import { ISerializable } from "./serializable";
+
+interface ISpriteConfig {
+    body?: Body;
+    mass?: number;
+}
 
 export class Sprite implements ISerializable {
     destroyed: boolean = false;
     body: Body;
 
     constructor(
-        body = Bodies.rectangle(400, 200, 80, 80),
+        config: ISpriteConfig,
     ) {
-        this.body = body;
+        const defaults = {
+            body: Bodies.rectangle(400, 200, 80, 80),
+            mass: 1,
+        };
+
+        config = Object.assign(defaults, config);
+
+        this.body = config.body;
         World.add(Global.engine.world, this.body);
+        Body.setMass(this.body, config.mass);
     }
 
     get vector() {

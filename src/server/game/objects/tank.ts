@@ -24,7 +24,10 @@ export class Tank extends Sprite {
         recoil = Constants.TANK.DEFUALT_RECOIL,
         recoilResetTime = Constants.TANK.DEFULT_RECOIL_RESET_TIME) {
 
-        super(Bodies.rectangle(position.x, position.y, width, height));
+        super({
+            body: Bodies.rectangle(position.x, position.y, width, height),
+            mass: Constants.TANK.DEFUALT_MASS,
+        });
 
         this.canFire = true;
         this.movementSpeed = movementSpeed;
@@ -34,7 +37,6 @@ export class Tank extends Sprite {
         this.recoilResetTime = recoilResetTime;
 
         this.body.frictionAir = 0.5;
-        Body.setMass(this.body, Constants.TANK.DEFUALT_MASS);
     }
 
     rotateRight() {
