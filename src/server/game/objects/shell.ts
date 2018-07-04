@@ -24,6 +24,7 @@ export class Shell extends Sprite {
         super({
             body: Bodies.rectangle(position.x, position.y, width, height),
             mass: Constants.SHELL.DEFAULT_MASS,
+            angle,
         });
 
         this.tank = tank;

@@ -5,6 +5,7 @@ import { ISerializable } from "./serializable";
 interface ISpriteConfig {
     body?: Body;
     mass?: number;
+    angle?: number;
 }
 
 export class Sprite implements ISerializable {
@@ -17,6 +18,7 @@ export class Sprite implements ISerializable {
         const defaults = {
             body: Bodies.rectangle(400, 200, 80, 80),
             mass: 1,
+            angle: 0,
         };
 
         config = Object.assign(defaults, config);
@@ -24,6 +26,7 @@ export class Sprite implements ISerializable {
         this.body = config.body;
         World.add(Global.engine.world, this.body);
         Body.setMass(this.body, config.mass);
+        Body.setAngle(this.body, config.angle);
     }
 
     get vector() {
