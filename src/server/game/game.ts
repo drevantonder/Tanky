@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { Engine } from "matter-js";
+import { Engine, Events, IEventCollision } from "matter-js";
 import { Player } from "./objects/players";
 import { Shell } from "./objects/shell";
 import { Explosion } from "./objects/explosion";
@@ -25,7 +25,6 @@ export class Game implements ISerializable {
         Global.engine = Engine.create();
         Global.engine.world.gravity.x = 0;
         Global.engine.world.gravity.y = 0;
-        Global.engine.world.gravity.scale = 0;
 
         this.map = new GameMap(20, 20);
 
@@ -39,6 +38,9 @@ export class Game implements ISerializable {
                 y: this.map.heightInPixels,
             },
         };
+
+        Events.on(Global.engine, "collisionStart", (event) => this.checkCollision(event));
+        Events.on(Global.engine, "collisionActive", (event) => this.checkCollision(event));
     }
 
     createPlayer(id: string) {
@@ -72,7 +74,6 @@ export class Game implements ISerializable {
                     }
                     break;
             }
-            // tank.point = this.map.lockInMap(tank.point);
         }
     }
 
@@ -94,7 +95,7 @@ export class Game implements ISerializable {
                 shell.destroy();
             }
             if (shell.destroyed) {
-                this.explosions.set(v4(), new Explosion(shell.body.position, 0));
+                this.explosions.set(v4(), new Explosion(shell.body.position));
             }
         });
 
@@ -108,7 +109,7 @@ export class Game implements ISerializable {
             }
         });
 
-        this.shells.forEach((explosion, uuid) => {
+        this.explosions.forEach((explosion, uuid) => {
             if (explosion.destroyed) {
                 this.explosions.delete(uuid);
             }
@@ -126,5 +127,12 @@ export class Game implements ISerializable {
 
     get state() {
         return this.toJSON();
+    }
+
+    checkCollision(event: IEventCollision<Engine>): any {
+        event.pairs.forEach((pair) => {
+            Events.trigger(pair.bodyA, "collision");
+            Events.trigger(pair.bodyB, "collision");
+        });
     }
 }

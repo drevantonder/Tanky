@@ -1,32 +1,19 @@
-import { Body, Bodies, World, Vector } from "matter-js";
+import { Body, Bodies, World, Vector, Events } from "matter-js";
 import { Global } from "./global";
 import { ISerializable } from "./serializable";
-
-interface ISpriteConfig {
-    body?: Body;
-    mass?: number;
-    angle?: number;
-}
 
 export class Sprite implements ISerializable {
     destroyed: boolean = false;
     body: Body;
 
     constructor(
-        config: ISpriteConfig,
+        body: Body,
     ) {
-        const defaults = {
-            body: Bodies.rectangle(400, 200, 80, 80),
-            mass: 1,
-            angle: 0,
-        };
+        this.body = body;
 
-        config = Object.assign(defaults, config);
-
-        this.body = config.body;
         World.add(Global.engine.world, this.body);
-        Body.setMass(this.body, config.mass);
-        Body.setAngle(this.body, config.angle);
+
+        Events.on(this.body, "collision", (event) => this.checkCollision(event));
     }
 
     get vector() {
@@ -37,6 +24,7 @@ export class Sprite implements ISerializable {
 
     destroy() {
         this.destroyed = true;
+        World.remove(Global.engine.world, this.body);
     }
 
     update() {
@@ -49,5 +37,9 @@ export class Sprite implements ISerializable {
             y: this.body.position.y,
             angle: this.body.angle,
         };
+    }
+
+    checkCollision(event) {
+        return;
     }
 }

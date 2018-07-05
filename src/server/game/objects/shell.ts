@@ -21,11 +21,12 @@ export class Shell extends Sprite {
         width = Constants.SHELL.DEFAULT_WIDTH,
         height = Constants.SHELL.DEFAULT_HEIGHT) {
 
-        super({
-            body: Bodies.rectangle(position.x, position.y, width, height),
-            mass: Constants.SHELL.DEFAULT_MASS,
-            angle,
-        });
+        super(
+            Bodies.rectangle(position.x, position.y, width, height, {
+                mass: Constants.SHELL.DEFAULT_MASS,
+                angle,
+            }),
+        );
 
         this.tank = tank;
         this.damage = damage;
@@ -33,17 +34,21 @@ export class Shell extends Sprite {
         this.range = range;
         this.distanceTraveled = 0;
 
-        Body.setVelocity(this.body, Vector.mult(this.vector, this.speed));
+        Body.applyForce(this.body,
+            this.body.position,
+            Vector.mult(this.vector, this.speed));
     }
 
     update() {
-        Body.setVelocity(this.body, Vector.mult(this.vector, this.speed));
-
         this.distanceTraveled += this.speed;
         if (this.distanceTraveled >= this.range) {
             this.destroy();
         }
 
         super.update();
+    }
+
+    checkCollision(event) {
+        this.destroy();
     }
 }
