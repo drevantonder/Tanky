@@ -1,17 +1,21 @@
 import { Body, Bodies, World, Vector, Events } from "matter-js";
 import { Global } from "./global";
 import { ISerializable } from "./serializable";
+import { Game } from "../game";
 
 export class Sprite implements ISerializable {
     destroyed: boolean = false;
     body: Body;
+    game: Game;
 
     constructor(
+        game: Game,
         body: Body,
     ) {
         this.body = body;
+        this.game = game;
 
-        World.add(Global.engine.world, this.body);
+        World.add(this.game.engine.world, this.body);
 
         Events.on(this.body, "collision", (event) => this.checkCollision(event));
     }
@@ -24,7 +28,7 @@ export class Sprite implements ISerializable {
 
     destroy() {
         this.destroyed = true;
-        World.remove(Global.engine.world, this.body);
+        World.remove(this.game.engine.world, this.body);
     }
 
     update() {

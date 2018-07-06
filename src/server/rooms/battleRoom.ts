@@ -27,14 +27,16 @@ export class State implements IGameState {
 }
 
 export class BattleRoom extends Room<State> {
+    maxClients = 2;
+
     public onInit(options) {
         console.log(this.roomName + " created!", options);
 
         Global.clock = this.clock;
 
-        this.setSimulationInterval(() => this.update());
-
         this.setState(new State());
+
+        this.setSimulationInterval(() => this.update());
     }
 
     public onJoin(client) {

@@ -2,6 +2,7 @@ import { Tank } from "./tank";
 import { Sprite } from "./sprite";
 import { Bodies, Vector, Body } from "matter-js";
 import { Constants } from "../../../imports/constants";
+import { Game } from "../game";
 
 export class Shell extends Sprite {
     tank: Tank;
@@ -12,6 +13,7 @@ export class Shell extends Sprite {
     distanceTraveled: number;
 
     constructor(
+        game: Game,
         position: Vector,
         angle: number,
         tank: Tank,
@@ -22,6 +24,7 @@ export class Shell extends Sprite {
         height = Constants.SHELL.DEFAULT_HEIGHT) {
 
         super(
+            game,
             Bodies.rectangle(position.x, position.y, width, height, {
                 mass: Constants.SHELL.DEFAULT_MASS,
                 angle,

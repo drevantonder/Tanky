@@ -20,15 +20,16 @@ export class Game implements ISerializable {
     shells = new EntityMap2<Shell>();
     explosions = new EntityMap2<Explosion>();
     map: GameMap;
+    engine: Engine;
 
     constructor() {
-        Global.engine = Engine.create();
-        Global.engine.world.gravity.x = 0;
-        Global.engine.world.gravity.y = 0;
+        this.engine = Engine.create();
+        this.engine.world.gravity.x = 0;
+        this.engine.world.gravity.y = 0;
 
-        this.map = new GameMap(20, 20);
+        this.map = new GameMap(this, 20, 20);
 
-        Global.engine.world.bounds = {
+        this.engine.world.bounds = {
             min: {
                 x: 0,
                 y: 0,
@@ -39,12 +40,12 @@ export class Game implements ISerializable {
             },
         };
 
-        Events.on(Global.engine, "collisionStart", (event) => this.checkCollision(event));
-        Events.on(Global.engine, "collisionActive", (event) => this.checkCollision(event));
+        Events.on(this.engine, "collisionStart", (event) => this.checkCollision(event));
+        Events.on(this.engine, "collisionActive", (event) => this.checkCollision(event));
     }
 
     createPlayer(id: string) {
-        this.players.set(id, new Player(id));
+        this.players.set(id, new Player(this, id));
     }
 
     removePlayer(id: string) {
@@ -78,7 +79,7 @@ export class Game implements ISerializable {
     }
 
     update() {
-        Engine.update(Global.engine, 1000 / 60);
+        Engine.update(this.engine, 1000 / 60);
 
         this.explosions.forEach((explosion) => {
             explosion.update();
@@ -95,7 +96,7 @@ export class Game implements ISerializable {
                 shell.destroy();
             }
             if (shell.destroyed) {
-                this.explosions.set(v4(), new Explosion(shell.body.position));
+                this.explosions.set(v4(), new Explosion(this, shell.body.position));
             }
         });
 
