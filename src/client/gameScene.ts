@@ -2,13 +2,12 @@ import * as Phaser from "phaser";
 
 import PlayerController from "./playerController";
 import { PlayerGameObject } from "./playerGameObject";
-import { Tile } from "../imports/tile";
 import { Room } from "colyseus.js";
 import { Assets } from "./assets";
 import { ShellSprite } from "./shellSprite";
 import { StateEntitiesManager } from "./stateEntitiesManager";
 import { ExplosionSprite } from "./explosionSprite";
-import { Explosion } from "../imports/explosion";
+import { Constants } from "../imports/constants";
 
 export default class GameScene extends Phaser.Scene {
   players: StateEntitiesManager<PlayerGameObject>;
@@ -41,7 +40,7 @@ export default class GameScene extends Phaser.Scene {
             { key: "explosion5", frame: 5 },
         ],
         repeat: 0,
-        duration: Explosion.LENGTH,
+        duration: Constants.EXPLOSION.LENGTH,
     });
 
     this.room = this.registry.get("room");
@@ -99,12 +98,13 @@ export default class GameScene extends Phaser.Scene {
   createMap() {
     const mapWidth = this.room.state.map.width;
     const mapHeight = this.room.state.map.height;
+    const tileSize = Constants.TILE.TILE_SIZE;
 
     // Creating a blank tilemap with the specified dimensions
     this.map = this.make.tilemap(
       {
-        tileWidth: Tile.TILE_SIZE,
-        tileHeight: Tile.TILE_SIZE,
+        tileWidth: tileSize,
+        tileHeight: tileSize,
         width: mapWidth,
         height: mapHeight,
       },
