@@ -7,9 +7,8 @@ export class PlayerGameObject extends NetworkedGameObject {
     super(scene, state, "player");
 
     this.state = state;
-    this.name = state.name;
 
-    this.tank = new TankSprite(scene, state.tank);
+    this.tank = new TankSprite(scene, state.tank, state.color);
 
     this.tank.stateGetter = () => {
       return this.stateGetter().tank;
@@ -19,7 +18,6 @@ export class PlayerGameObject extends NetworkedGameObject {
   update(time = 0, delta = 0) {
     super.update();
 
-    this.name = this.state.name;
     this.tank.update(time, delta);
   }
 }

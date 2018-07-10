@@ -6,6 +6,7 @@ import { Explosion } from "./objects/explosion";
 import { GameMap, IGameMapState } from "./objects/gameMap";
 import { EntityMap2 } from "./objects/EntityMap2";
 import { ISerializable } from "./objects/serializable";
+import { Color } from "../../imports/color";
 
 export interface IGameState {
     players: {};
@@ -18,6 +19,7 @@ export class Game implements ISerializable {
     players = new EntityMap2<Player>();
     shells = new EntityMap2<Shell>();
     explosions = new EntityMap2<Explosion>();
+    colors = [Color.Green, Color.Blue, Color.Sand, Color.Red];
     map: GameMap;
     engine: Engine;
 
@@ -46,10 +48,13 @@ export class Game implements ISerializable {
     }
 
     createPlayer(id: string) {
-        this.players.set(id, new Player(this, id));
+        const color = this.colors.pop();
+        this.players.set(id, new Player(this, Number(id), color));
     }
 
     removePlayer(id: string) {
+        this.colors.push(this.players.get(id).color);
+        console.log(Color[this.players.get(id).color])
         this.players.delete(id);
     }
 
@@ -75,6 +80,7 @@ export class Game implements ISerializable {
                     if (shell) {
                         this.shells.set(v4(), shell);
                     }
+                    console.log(Color[player.color]);
                     break;
             }
         }
