@@ -23,12 +23,12 @@ export class State {
     createPlayer(id: string) {
         this.players.push(id);
 
-        if (this.status !== Status.Playing && this.players.length >= Constants.MIN_PLAYERS) {
-            this.startGame();
-        }
-
         if (this.Game) {
             this.Game.createPlayer(id);
+        }
+
+        if (this.status !== Status.Playing && this.players.length >= Constants.MIN_PLAYERS) {
+            this.startGame();
         }
     }
 

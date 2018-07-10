@@ -6,11 +6,11 @@ import { Color } from "../../../imports/color";
 export class Player implements ISerializable {
     name = "Andre";
     tank: Tank;
-    id: number;
+    id: string;
     game: Game;
     color: Color;
 
-    constructor(game: Game, id: number, color: Color) {
+    constructor(game: Game, id: string, color: Color) {
         this.game = game;
         this.tank = new Tank(this.game);
         this.id = id;

@@ -6,11 +6,11 @@ export class TankSprite extends NetworkedSprite {
     let texture = "tank_";
 
     switch (color) {
-      case Color.Blue:
-        texture += "blue";
-        break;
       case Color.Green:
         texture += "green";
+        break;
+      case Color.Blue:
+        texture += "blue";
         break;
       case Color.Sand:
         texture += "sand";
@@ -19,7 +19,7 @@ export class TankSprite extends NetworkedSprite {
         texture += "red";
         break;
       default:
-        texture += "blue";
+        throw new Error("Color does not exist: " + color);
     }
 
     super(scene, state, texture);

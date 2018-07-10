@@ -5,7 +5,7 @@ export class Constants {
     };
     static TANK = {
         DEFAULT_ROTATE_SPEED: 4, // degrees
-        DEFAULT_MOVEMENT_SPEED: 12, // force
+        DEFAULT_MOVEMENT_SPEED: 24, // force
         DEFAULT_RELOAD_SPEED: 400, // ms
         DEFAULT_RECOIL: 10, // px
         DEFULT_RECOIL_RESET_TIME: 100, // ms

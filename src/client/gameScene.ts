@@ -103,7 +103,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createMap() {
-    console.log(this.room.state);
     const mapWidth = this.room.state.game.map.width;
     const mapHeight = this.room.state.game.map.height;
     const tileSize = Constants.TILE.TILE_SIZE;

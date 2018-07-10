@@ -48,8 +48,13 @@ export class Game implements ISerializable {
     }
 
     createPlayer(id: string) {
-        const color = this.colors.pop();
-        this.players.set(id, new Player(this, Number(id), color));
+        let color;
+        if (!this.players.has(id)) {
+            color = this.colors.pop();
+        } else {
+            color = this.players.get(id).color;
+        }
+        this.players.set(id, new Player(this, id, color));
     }
 
     removePlayer(id: string) {
