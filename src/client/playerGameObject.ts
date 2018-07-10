@@ -20,4 +20,9 @@ export class PlayerGameObject extends NetworkedGameObject {
 
     this.tank.update(time, delta);
   }
+
+  destroy() {
+    this.tank.destroy();
+    super.destroy();
+  }
 }
