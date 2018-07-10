@@ -2,7 +2,7 @@ import * as Phaser from "phaser";
 
 import PlayerController from "./playerController";
 import { PlayerGameObject } from "./playerGameObject";
-import { Room } from "colyseus.js";
+import { Room, DataChange } from "colyseus.js";
 import { Assets } from "./assets";
 import { ShellSprite } from "./shellSprite";
 import { StateEntitiesManager } from "./stateEntitiesManager";
@@ -70,9 +70,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.setCameraBounds();
 
-    if (this.room.state.players[this.room.sessionId]) {
-      this.assignPlayer();
-    }
+    this.assignPlayer();
   }
 
   update(time, delta) {

@@ -1,5 +1,5 @@
 import { Game, IGameState } from "../game/game";
-import { Room, nosync } from "colyseus";
+import { Room, nosync, Client } from "colyseus";
 import { Global } from "../game/objects/global";
 import { Status } from "../../imports/status";
 import { Constants } from "../../imports/constants";
@@ -7,10 +7,10 @@ import { Constants } from "../../imports/constants";
 export class State {
     game: IGameState;
     status: Status = Status.WaitingForPlayers;
-    players: string[] = [];
 
     @nosync
     Game: Game;
+    players: string[] = [];
 
     update() {
         if (this.Game) {
@@ -42,7 +42,7 @@ export class State {
     }
 
     startGame() {
-        this.Game = new Game();
+        this.Game = new Game(this.players);
 
         this.status = Status.Playing;
     }
@@ -61,15 +61,15 @@ export class BattleRoom extends Room<State> {
         this.setSimulationInterval(() => this.update());
     }
 
-    public onJoin(client) {
+    public onJoin(client: Client) {
         this.state.createPlayer(client.sessionId);
     }
 
-    public onLeave(client) {
+    public onLeave(client: Client) {
         this.state.removePlayer(client.sessionId);
     }
 
-    public onMessage(client, data) {
+    public onMessage(client: Client, data) {
         console.log(this.roomName + " received message from", client.sessionId, ":", data);
         this.state.Game.moveTank(client.sessionId, data);
     }

@@ -21,7 +21,7 @@ export class Game implements ISerializable {
     map: GameMap;
     engine: Engine;
 
-    constructor() {
+    constructor(players: string[]) {
         this.engine = Engine.create();
         this.engine.world.gravity.x = 0;
         this.engine.world.gravity.y = 0;
@@ -41,6 +41,8 @@ export class Game implements ISerializable {
 
         Events.on(this.engine, "collisionStart", (event) => this.checkCollision(event));
         Events.on(this.engine, "collisionActive", (event) => this.checkCollision(event));
+
+        players.forEach((player) => this.createPlayer(player));
     }
 
     createPlayer(id: string) {
@@ -53,7 +55,8 @@ export class Game implements ISerializable {
 
     moveTank(id: string, movement: any) {
         if (movement.input) {
-            const tank = this.players.get(id).tank;
+            const player = this.players.get(id);
+            const tank = player.tank;
             switch (movement.input) {
                 case "right":
                     tank.rotateRight();
