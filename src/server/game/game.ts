@@ -54,7 +54,6 @@ export class Game implements ISerializable {
 
     removePlayer(id: string) {
         this.colors.push(this.players.get(id).color);
-        console.log(Color[this.players.get(id).color])
         this.players.delete(id);
     }
 
@@ -80,7 +79,6 @@ export class Game implements ISerializable {
                     if (shell) {
                         this.shells.set(v4(), shell);
                     }
-                    console.log(Color[player.color]);
                     break;
             }
         }
