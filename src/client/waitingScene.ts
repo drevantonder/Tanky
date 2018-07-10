@@ -6,7 +6,7 @@ import { Constants } from "../imports/constants";
 export default class WaitingScene extends Phaser.Scene {
   room: Room;
   map: Phaser.Tilemaps.Tilemap;
-    text: Phaser.GameObjects.Text;
+  text: Phaser.GameObjects.Text;
 
   constructor() {
     super("waiting");

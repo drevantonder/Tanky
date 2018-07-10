@@ -6,16 +6,11 @@ import { Constants } from "../../imports/constants";
 
 export class State {
     game: IGameState;
-    status: Status;
-    players: string[];
+    status: Status = Status.WaitingForPlayers;
+    players: string[] = [];
 
     @nosync
     Game: Game;
-
-    constructor() {
-        this.status = Status.WaitingForPlayers;
-        this.players = [];
-    }
 
     update() {
         if (this.Game) {
@@ -54,7 +49,7 @@ export class State {
 }
 
 export class BattleRoom extends Room<State> {
-    maxClients = 4;
+    maxClients = Constants.MAX_PLAYERS;
 
     public onInit(options) {
         console.log(this.roomName + " created!", options);

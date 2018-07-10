@@ -28,4 +28,5 @@ export class Constants {
         TILE_SIZE: 64,
     };
     static MIN_PLAYERS = 2;
+    static MAX_PLAYERS = 4;
 }

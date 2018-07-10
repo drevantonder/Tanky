@@ -19,13 +19,13 @@ export default class PhaserGame extends Phaser.Game {
 
     this.registry.set("room", room);
 
-    if (room.state.status === Status.Playing) {
-      this.scene.switch("waiting", "game");
-    }
-
     room.listen("status", (change) => {
       if (change.value === Status.Playing) {
-        this.scene.switch("waiting", "game");
+        this.scene.start("game");
+        this.scene.stop("waiting");
+      } else if (change.value === Status.WaitingForPlayers) {
+        this.scene.stop("game");
+        this.scene.start("waiting");
       }
     });
 
