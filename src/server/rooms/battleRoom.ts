@@ -1,33 +1,60 @@
 import { Game, IGameState } from "../game/game";
 import { Room, nosync } from "colyseus";
 import { Global } from "../game/objects/global";
+import { Status } from "../../imports/status";
+import { Constants } from "../../imports/constants";
 
-export class State implements IGameState {
-    players: {};
-    shells: {};
-    explosions: {};
-    map;
+export class State {
+    game: IGameState;
+    status: Status;
+    players: string[];
 
     @nosync
-    game: Game;
+    Game: Game;
 
     constructor() {
-        this.game = new Game();
+        this.status = Status.WaitingForPlayers;
+        this.players = [];
     }
 
     update() {
-        this.game.update();
+        if (this.Game) {
+            this.Game.update();
 
-        const state = this.game.toJSON();
-        this.players = state.players;
-        this.shells = state.shells;
-        this.explosions = state.explosions;
-        this.map = state.map;
+            this.game =  this.Game.toJSON();
+        }
+    }
+
+    createPlayer(id: string) {
+        this.players.push(id);
+
+        if (this.players.length >= Constants.MIN_PLAYERS) {
+            this.startGame();
+        }
+
+        if (this.Game) {
+            this.Game.createPlayer(id);
+        }
+    }
+
+    removePlayer(id: string) {
+        const index = this.players.indexOf(id);
+        this.players.splice(index, 1);
+
+        if (this.Game) {
+            this.Game.removePlayer(id);
+        }
+    }
+
+    startGame() {
+        this.Game = new Game();
+
+        this.status = Status.Playing;
     }
 }
 
 export class BattleRoom extends Room<State> {
-    maxClients = 2;
+    maxClients = 4;
 
     public onInit(options) {
         console.log(this.roomName + " created!", options);
@@ -40,16 +67,16 @@ export class BattleRoom extends Room<State> {
     }
 
     public onJoin(client) {
-        this.state.game.createPlayer(client.sessionId);
+        this.state.createPlayer(client.sessionId);
     }
 
     public onLeave(client) {
-        this.state.game.removePlayer(client.sessionId);
+        this.state.removePlayer(client.sessionId);
     }
 
     public onMessage(client, data) {
         console.log(this.roomName + " received message from", client.sessionId, ":", data);
-        this.state.game.moveTank(client.sessionId, data);
+        this.state.Game.moveTank(client.sessionId, data);
     }
 
     public onDispose() {

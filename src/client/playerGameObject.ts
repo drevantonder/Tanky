@@ -19,8 +19,6 @@ export class PlayerGameObject extends NetworkedGameObject {
   update(time = 0, delta = 0) {
     super.update();
 
-    this.state = this.scene.registry.get("room").state.players[this.state.id];
-
     this.name = this.state.name;
     this.tank.update(time, delta);
   }

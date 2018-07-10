@@ -4,7 +4,6 @@ import { Player } from "./objects/players";
 import { Shell } from "./objects/shell";
 import { Explosion } from "./objects/explosion";
 import { GameMap, IGameMapState } from "./objects/gameMap";
-import { Global } from "./objects/global";
 import { EntityMap2 } from "./objects/EntityMap2";
 import { ISerializable } from "./objects/serializable";
 
@@ -124,10 +123,6 @@ export class Game implements ISerializable {
             explosions: this.explosions.toJSON(),
             map: this.map.toJSON(),
         };
-    }
-
-    get state() {
-        return this.toJSON();
     }
 
     checkCollision(event: IEventCollision<Engine>): any {

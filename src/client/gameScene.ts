@@ -12,7 +12,7 @@ import { Constants } from "../imports/constants";
 export default class GameScene extends Phaser.Scene {
   players: StateEntitiesManager<PlayerGameObject>;
   shells: StateEntitiesManager<ShellSprite>;
-  explosions: StateEntitiesManager<ShellSprite>;
+  explosions: StateEntitiesManager<ExplosionSprite>;
 
   room: Room;
   playerController: PlayerController;
@@ -20,7 +20,7 @@ export default class GameScene extends Phaser.Scene {
   player: PlayerGameObject;
 
   constructor() {
-    super("main");
+    super("game");
   }
 
   preload() {
@@ -47,15 +47,24 @@ export default class GameScene extends Phaser.Scene {
 
     this.createMap();
 
-    this.players = new StateEntitiesManager<PlayerGameObject>(this.room, "players", (value) => {
+    this.players = new StateEntitiesManager<PlayerGameObject>(
+      this.room,
+      "game/players",
+      (value) => {
       return new PlayerGameObject(this, value);
     });
 
-    this.shells = new StateEntitiesManager<ShellSprite>(this.room, "shells", (value) => {
+    this.shells = new StateEntitiesManager<ShellSprite>(
+      this.room,
+      "game/shells",
+      (value) => {
       return new ShellSprite(this, value);
     });
 
-    this.explosions = new StateEntitiesManager<ShellSprite>(this.room, "explosions", (value) => {
+    this.explosions = new StateEntitiesManager<ExplosionSprite>(
+      this.room,
+      "game/explosions",
+      (value) => {
       return new ExplosionSprite(this, value);
     });
 
@@ -96,8 +105,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createMap() {
-    const mapWidth = this.room.state.map.width;
-    const mapHeight = this.room.state.map.height;
+    console.log(this.room.state);
+    const mapWidth = this.room.state.game.map.width;
+    const mapHeight = this.room.state.game.map.height;
     const tileSize = Constants.TILE.TILE_SIZE;
 
     // Creating a blank tilemap with the specified dimensions

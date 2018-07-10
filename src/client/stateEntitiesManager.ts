@@ -20,7 +20,7 @@ export class StateEntitiesManager<T extends NetworkedGameObject> extends Map<str
         const entity = this.createFunction(value);
         this.set(id, entity);
         entity.stateGetter = () => {
-            return this.room.state[ this.path ][ id ];
+            return this.valueFromPath()[ id ];
         };
     }
 
@@ -29,10 +29,20 @@ export class StateEntitiesManager<T extends NetworkedGameObject> extends Map<str
         this.delete(id);
     }
 
+    private valueFromPath() {
+        const indices = this.path.split("/");
+        let value = this.room.state;
+        indices.forEach((indice) => {
+            value = value[indice];
+        });
+        return value;
+    }
+
     private setInitialState() {
-        for (const ID in this.room.state[this.path]) {
-            if (this.room.state[this.path].hasOwnProperty(ID)) {
-                this.create(ID, this.room.state.players[ID]);
+        const value = this.valueFromPath();
+        for (const ID in value) {
+            if (value.hasOwnProperty(ID)) {
+                this.create(ID, value[ID]);
             }
         }
     }
