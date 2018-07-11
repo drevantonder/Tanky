@@ -1,7 +1,9 @@
 import { NetworkedSprite } from "./networkedSprite";
 import { Color } from "../imports/color";
+import { TankHealthSprite } from "./tankHealthSprite";
 
 export class TankSprite extends NetworkedSprite {
+  healthSprite: TankHealthSprite;
   constructor(scene, state, color: Color) {
     let texture = "tank_";
 
@@ -25,5 +27,12 @@ export class TankSprite extends NetworkedSprite {
     super(scene, state, texture);
 
     this.setDepth(2);
+
+    this.healthSprite = new TankHealthSprite(this.scene, this);
+  }
+
+  update() {
+    super.update();
+    this.healthSprite.update();
   }
 }
