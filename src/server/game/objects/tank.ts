@@ -93,6 +93,10 @@ export class Tank extends Sprite implements IDamageable {
 
     damage(amount) {
         this.health -= amount;
+
+        if (this.health <= 0) {
+            this.destroy();
+        }
     }
 
     toJSON() {

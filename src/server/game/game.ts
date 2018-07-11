@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { Engine, Events, IEventCollision } from "matter-js";
-import { Player } from "./objects/players";
+import { Player } from "./objects/player";
 import { Shell } from "./objects/shell";
 import { Explosion } from "./objects/explosion";
 import { GameMap, IGameMapState } from "./objects/gameMap";
@@ -72,26 +72,28 @@ export class Game implements ISerializable {
     moveTank(id: string, movement: any) {
         if (movement.input) {
             const player = this.players.get(id);
-            const tank = player.tank;
-            switch (movement.input) {
-                case "right":
-                    tank.rotateRight();
-                    break;
-                case "left":
-                    tank.rotateLeft();
-                    break;
-                case "up":
-                    tank.forward();
-                    break;
-                case "down":
-                    tank.reverse();
-                    break;
-                case "fire":
-                    const shell = tank.fire();
-                    if (shell) {
-                        this.shells.set(v4(), shell);
-                    }
-                    break;
+            if (player.tank) {
+                const tank = player.tank;
+                switch (movement.input) {
+                    case "right":
+                        tank.rotateRight();
+                        break;
+                    case "left":
+                        tank.rotateLeft();
+                        break;
+                    case "up":
+                        tank.forward();
+                        break;
+                    case "down":
+                        tank.reverse();
+                        break;
+                    case "fire":
+                        const shell = tank.fire();
+                        if (shell) {
+                            this.shells.set(v4(), shell);
+                        }
+                        break;
+                }
             }
         }
     }
@@ -104,7 +106,7 @@ export class Game implements ISerializable {
         });
 
         this.players.forEach((player) => {
-            player.tank.update();
+            player.update();
         });
 
         this.shells.forEach((shell) => {
@@ -131,6 +133,12 @@ export class Game implements ISerializable {
         this.explosions.forEach((explosion, uuid) => {
             if (explosion.destroyed) {
                 this.explosions.delete(uuid);
+            }
+        });
+
+        this.players.forEach((player, uuid) => {
+            if (player.tank && player.tank.destroyed) {
+                player.tank = null;
             }
         });
     }

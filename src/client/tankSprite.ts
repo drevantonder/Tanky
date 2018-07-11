@@ -31,8 +31,13 @@ export class TankSprite extends NetworkedSprite {
     this.healthSprite = new TankHealthSprite(this.scene, this);
   }
 
-  update() {
+  update(time, delta) {
     super.update();
     this.healthSprite.update();
+  }
+
+  destroy() {
+    super.destroy();
+    this.healthSprite.destroy();
   }
 }

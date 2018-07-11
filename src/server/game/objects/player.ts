@@ -5,7 +5,7 @@ import { Color } from "../../../imports/color";
 
 export class Player implements ISerializable {
     name = "Andre";
-    tank: Tank;
+    tank?: Tank;
     id: string;
     game: Game;
     color: Color;
@@ -20,9 +20,15 @@ export class Player implements ISerializable {
     toJSON() {
         return {
             name: this.name,
-            tank: this.tank.toJSON(),
+            tank: this.tank ? this.tank.toJSON() : null,
             id: this.id,
             color: this.color,
         };
+    }
+
+    update() {
+        if (this.tank) {
+            this.tank.update();
+        }
     }
 }
