@@ -1,5 +1,4 @@
-import { Body, Bodies, World, Vector, Events } from "matter-js";
-import { Global } from "./global";
+import { Body, Bodies, World, Vector, Events} from "matter-js";
 import { ISerializable } from "./serializable";
 import { Game } from "../game";
 
@@ -17,7 +16,15 @@ export class Sprite implements ISerializable {
 
         World.add(this.game.engine.world, this.body);
 
-        Events.on(this.body, "collision", (event) => this.checkCollision(event));
+        Events.on(this.body, "collision", (pair: Matter.IPair) => {
+            const sprite1 = this.game.findSpriteByBody(pair.bodyA);
+            const sprite2 = this.game.findSpriteByBody(pair.bodyB);
+            const sprite = sprite1 === this ? sprite2 : sprite1;
+
+            this.checkCollision(sprite);
+        });
+
+        this.game.sprites.push(this);
     }
 
     get vector() {
@@ -43,7 +50,7 @@ export class Sprite implements ISerializable {
         };
     }
 
-    checkCollision(event) {
+    checkCollision(sprite: Sprite) {
         return;
     }
 }

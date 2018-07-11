@@ -7,6 +7,7 @@ import { GameMap, IGameMapState } from "./objects/gameMap";
 import { EntityMap2 } from "./objects/EntityMap2";
 import { ISerializable } from "./objects/serializable";
 import { Color } from "../../imports/color";
+import { Sprite } from "./objects/sprite";
 
 export interface IGameState {
     players: {};
@@ -22,6 +23,8 @@ export class Game implements ISerializable {
     colors = [Color.Green, Color.Blue, Color.Sand, Color.Red];
     map: GameMap;
     engine: Engine;
+
+    sprites: Sprite[] = [];
 
     constructor(players: string[]) {
         this.engine = Engine.create();
@@ -45,6 +48,10 @@ export class Game implements ISerializable {
         Events.on(this.engine, "collisionActive", (event) => this.checkCollision(event));
 
         players.forEach((player) => this.createPlayer(player));
+    }
+
+    findSpriteByBody(body: Matter.Body) {
+        return this.sprites.filter((sprite) => sprite.body.id === body.id)[0];
     }
 
     createPlayer(id: string) {
@@ -139,8 +146,8 @@ export class Game implements ISerializable {
 
     checkCollision(event: IEventCollision<Engine>): any {
         event.pairs.forEach((pair) => {
-            Events.trigger(pair.bodyA, "collision");
-            Events.trigger(pair.bodyB, "collision");
+            Events.trigger(pair.bodyA, "collision", pair);
+            Events.trigger(pair.bodyB, "collision", pair);
         });
     }
 }

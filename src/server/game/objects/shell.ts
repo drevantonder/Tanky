@@ -3,6 +3,7 @@ import { Sprite } from "./sprite";
 import { Bodies, Vector, Body } from "matter-js";
 import { Constants } from "../../../imports/constants";
 import { Game } from "../game";
+import { IDamageable, isDamageable } from "./IDamageable";
 
 export class Shell extends Sprite {
     tank: Tank;
@@ -51,7 +52,10 @@ export class Shell extends Sprite {
         super.update();
     }
 
-    checkCollision(event) {
+    checkCollision(sprite: Sprite) {
+        if (isDamageable(sprite)) {
+            sprite.damage(this.damage);
+        }
         this.destroy();
     }
 }
