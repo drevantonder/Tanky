@@ -29,4 +29,5 @@ export class Constants {
     };
     static MIN_PLAYERS = 2;
     static MAX_PLAYERS = 4;
+    static Font = "Muli";
 }

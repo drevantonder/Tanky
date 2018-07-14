@@ -1,5 +1,6 @@
 import { TankSprite } from "./tankSprite";
 import { lerp } from "@gamestdio/mathf/lib";
+import { Constants } from "../imports/constants";
 
 export class TankHealthSprite extends Phaser.GameObjects.Text {
     tank: TankSprite;
@@ -11,6 +12,8 @@ export class TankHealthSprite extends Phaser.GameObjects.Text {
         this.setDepth(3);
 
         this.scene.add.existing(this);
+
+        this.setFont(Constants.Font);
     }
 
     update() {

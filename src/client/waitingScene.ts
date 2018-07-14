@@ -31,7 +31,7 @@ export default class WaitingScene extends Phaser.Scene {
     this.text.x -= this.text.width / 2;
     this.text.y -= this.text.height / 2;
 
-    this.text.setFontFamily("Muli");
+    this.text.setFontFamily(Constants.Font);
   }
 
   update(time, delta) {
