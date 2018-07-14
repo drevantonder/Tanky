@@ -24,5 +24,6 @@ export default class GameOverScene extends Phaser.Scene {
     this.text.y -= this.text.height / 2;
 
     this.text.setFontFamily(Constants.Font);
+    this.text.setFontSize(50);
   }
 }

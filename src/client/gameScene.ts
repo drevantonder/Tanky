@@ -30,6 +30,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.children.removeAll();
+
     this.room = this.registry.get("room");
 
     this.createAnimations();
