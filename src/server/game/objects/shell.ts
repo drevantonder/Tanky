@@ -38,12 +38,12 @@ export class Shell extends Sprite {
         this.range = range;
         this.distanceTraveled = 0;
 
-        Body.applyForce(this.body,
-            this.body.position,
-            Vector.mult(this.vector, this.speed));
+        Body.setVelocity(this.body, Vector.mult(this.vector, this.speed));
     }
 
     update() {
+        Body.setVelocity(this.body, Vector.mult(this.vector, this.speed));
+
         this.distanceTraveled += this.speed;
         if (this.distanceTraveled >= this.range) {
             this.destroy();

@@ -158,4 +158,28 @@ export class Game implements ISerializable {
             Events.trigger(pair.bodyB, "collision", pair);
         });
     }
+
+    get alivePlayers() {
+        const alivePlayers: Player[] = [];
+        this.players.forEach((player) => {
+            if (player.tank) {
+                alivePlayers.push(player);
+            }
+        });
+
+        return alivePlayers;
+    }
+
+    get winner() {
+        if (this.isOver()) {
+            return this.alivePlayers[0];
+        }
+        return null;
+    }
+
+    isOver() {
+        if (this.alivePlayers.length === 1) {
+            return true;
+        }
+    }
 }

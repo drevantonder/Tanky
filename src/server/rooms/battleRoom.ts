@@ -16,7 +16,18 @@ export class State {
         if (this.Game) {
             this.Game.update();
 
-            this.game =  this.Game.toJSON();
+            this.game = this.Game.toJSON();
+
+            // this has to be last code to be run in update as it sets this.Game to null
+            if (this.Game.isOver()) {
+                this.endGame();
+            }
+        }
+    }
+
+    onMessage(client: Client, data) {
+        if (this.Game) {
+            this.Game.moveTank(client.sessionId, data);
         }
     }
 
@@ -46,6 +57,19 @@ export class State {
 
         this.status = Status.Playing;
     }
+
+    endGame() {
+        const winner = this.Game.winner;
+        if (winner) {
+            console.log(winner.id);
+        }
+
+        this.Game = null;
+
+        this.status = Status.GameOver;
+
+        this.startGame();
+    }
 }
 
 export class BattleRoom extends Room<State> {
@@ -71,7 +95,7 @@ export class BattleRoom extends Room<State> {
 
     public onMessage(client: Client, data) {
         console.log(this.roomName + " received message from", client.sessionId, ":", data);
-        this.state.Game.moveTank(client.sessionId, data);
+        this.state.onMessage(client, data);
     }
 
     public onDispose() {

@@ -17,7 +17,7 @@ export class Constants {
         LENGTH: 300, // time in ms this is alive
     };
     static SHELL = {
-        DEFAULT_SPEED: 1, // px
+        DEFAULT_SPEED: 20, // px
         DEFAULT_DAMAGE: 20,
         DEFAULT_RANGE: 1000, // how many pixels the shell will fly
         DEFAULT_WIDTH: 16, // px
