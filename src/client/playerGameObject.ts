@@ -2,26 +2,46 @@ import { TankSprite } from "./tankSprite";
 import { NetworkedGameObject } from "./networkedGameObject";
 
 export class PlayerGameObject extends NetworkedGameObject {
-  tank: TankSprite;
+  tank?: TankSprite;
   constructor(scene, state) {
     super(scene, state, "player");
 
     this.state = state;
-    this.name = state.name;
 
-    this.tank = new TankSprite(scene, state.tank);
+    if (this.state.tank) {
+      this.tank = new TankSprite(scene, state.tank, state.color);
 
-    this.tank.stateGetter = () => {
-      return this.stateGetter().tank;
-    };
+      this.tank.stateGetter = () => {
+        return this.stateGetter().tank;
+      };
+    }
   }
 
   update(time = 0, delta = 0) {
     super.update();
+    if (this.tank && !this.state.tank) {
+      this.tank.destroy();
+      this.tank = null;
+    }
 
-    this.state = this.scene.registry.get("room").state.players[this.state.id];
+    if (this.tank) {
+      this.tank.update(time, delta);
+    }
 
-    this.name = this.state.name;
-    this.tank.update(time, delta);
+    if (this.state.tank && !this.tank) {
+      this.tank = new TankSprite(this.scene, this.state.tank, this.state.color);
+
+      this.tank.stateGetter = () => {
+        return this.stateGetter().tank;
+      };
+    }
+  }
+
+  destroy() {
+    if (this.tank) {
+      this.tank.destroy();
+    }
+
+    super.destroy();
   }
 }

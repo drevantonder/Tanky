@@ -1,53 +1,105 @@
 import { Game, IGameState } from "../game/game";
-import { Room, nosync } from "colyseus";
+import { Room, nosync, Client } from "colyseus";
 import { Global } from "../game/objects/global";
+import { Status } from "../../imports/status";
+import { Constants } from "../../imports/constants";
 
-export class State implements IGameState {
-    players: {};
-    shells: {};
-    explosions: {};
-    map;
+export class State {
+    static TIME_TO_WAIT_FOR_EXTRA_PLAYERS = Constants.TIME_TO_WAIT_FOR_EXTRA_PLAYERS;
+    static TIME_TO_WAIT_FOR_GAME_OVER = Constants.TIME_TO_WAIT_FOR_GAME_OVER;
+
+    game: IGameState;
+    status: Status = Status.WaitingForMinPlayers;
 
     @nosync
-    game: Game;
-
-    constructor() {
-        this.game = new Game();
-    }
+    Game: Game;
+    players: string[] = [];
 
     update() {
-        this.game.update();
+        if (this.Game) {
+            this.Game.update();
 
-        const state = this.game.toJSON();
-        this.players = state.players;
-        this.shells = state.shells;
-        this.explosions = state.explosions;
-        this.map = state.map;
+            this.game = this.Game.toJSON();
+
+            // this has to be last code to be run in update as it sets this.Game to null
+            if (this.Game.isOver()) {
+                this.endGame();
+            }
+        }
+    }
+
+    onMessage(client: Client, data) {
+        if (this.Game) {
+            this.Game.moveTank(client.sessionId, data);
+        }
+    }
+
+    createPlayer(id: string) {
+        this.players.push(id);
+
+        // if (this.Game) {
+        //     this.Game.createPlayer(id);
+        // }
+
+        if (this.status !== Status.Playing && this.players.length >= Constants.MIN_PLAYERS) {
+            this.status = Status.WaitingForExtraPlayers;
+            Global.clock.setTimeout(() => this.startGame(), State.TIME_TO_WAIT_FOR_EXTRA_PLAYERS);
+        }
+    }
+
+    removePlayer(id: string) {
+        const index = this.players.indexOf(id);
+        this.players.splice(index, 1);
+
+        if (this.Game) {
+            this.Game.removePlayer(id);
+        }
+    }
+
+    startGame() {
+        this.Game = new Game(this.players);
+
+        this.status = Status.Playing;
+    }
+
+    endGame() {
+        const winner = this.Game.winner;
+        if (winner) {
+            console.log(winner.id);
+        }
+
+        this.Game = null;
+
+        this.status = Status.GameOver;
+
+        Global.clock.setTimeout(() => this.startGame(), State.TIME_TO_WAIT_FOR_GAME_OVER);
     }
 }
 
 export class BattleRoom extends Room<State> {
+    maxClients = Constants.MAX_PLAYERS;
+
     public onInit(options) {
         console.log(this.roomName + " created!", options);
 
         Global.clock = this.clock;
 
-        this.setSimulationInterval(() => this.update());
-
         this.setState(new State());
+
+        this.setSimulationInterval(() => this.update());
     }
 
-    public onJoin(client) {
-        this.state.game.createPlayer(client.sessionId);
+    public onJoin(client: Client) {
+        this.state.createPlayer(client.sessionId);
     }
 
-    public onLeave(client) {
-        this.state.game.removePlayer(client.sessionId);
+    public onLeave(client: Client) {
+        this.state.removePlayer(client.sessionId);
     }
 
-    public onMessage(client, data) {
+    public onMessage(client: Client, data) {
         console.log(this.roomName + " received message from", client.sessionId, ":", data);
-        this.state.game.moveTank(client.sessionId, data);
+        this.state.onMessage(client, data);
     }
 
     public onDispose() {

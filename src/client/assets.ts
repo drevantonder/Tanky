@@ -3,7 +3,10 @@ import { Asset } from "./asset";
 export class Assets {
     static assets = new Map<string, Asset>(
         [
-            ["tank", new Asset("tank", "assets/tank_blue.png", -90)],
+            ["tank_blue", new Asset("tank_blue", "assets/tank_blue.png", -90)],
+            ["tank_red", new Asset("tank_red", "assets/tank_red.png", -90)],
+            ["tank_green", new Asset("tank_green", "assets/tank_green.png", -90)],
+            ["tank_sand", new Asset("tank_sand", "assets/tank_sand.png", -90)],
             ["tiles", new Asset("tiles", "assets/terrainTiles_default.png", 0)],
             ["shell", new Asset("shell", "assets/bulletBlue1.png", 90)],
             ["explosion1", new Asset("explosion1", "assets/explosion1.png", 0)],

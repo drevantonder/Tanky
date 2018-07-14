@@ -5,6 +5,7 @@ import { Global } from "./global";
 import { Constants } from "../../../imports/constants";
 import { ISerializable } from "./serializable";
 import { EntityMap2 } from "./EntityMap2";
+import { Game } from "../game";
 
 export interface IGameMapState {
     width: number;
@@ -18,10 +19,12 @@ export class GameMap implements ISerializable {
     width: number;
     height: number;
     tiles = new EntityMap2<Tile>();
+    game: Game;
 
-    constructor(width: number, height: number) {
+    constructor(game: Game, width: number, height: number) {
         this.width = width;
         this.height = height;
+        this.game = game;
 
         this.generate();
 
@@ -29,16 +32,16 @@ export class GameMap implements ISerializable {
     }
 
     createBounds() {
-        World.add(Global.engine.world,
+        World.add(this.game.engine.world,
             Bodies.rectangle(0, this.heightInPixels / 2, 20, this.heightInPixels, { isStatic: true }),
         );
-        World.add(Global.engine.world,
+        World.add(this.game.engine.world,
             Bodies.rectangle(this.widthInPixels / 2, 0, this.widthInPixels, 20, { isStatic: true }),
         );
-        World.add(Global.engine.world,
+        World.add(this.game.engine.world,
             Bodies.rectangle(this.widthInPixels, this.heightInPixels / 2, 20, this.heightInPixels, { isStatic: true }),
         );
-        World.add(Global.engine.world,
+        World.add(this.game.engine.world,
             Bodies.rectangle(this.widthInPixels / 2, this.heightInPixels, this.widthInPixels, 20, { isStatic: true }),
         );
     }

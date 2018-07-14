@@ -1,12 +1,13 @@
 import { v4 } from "uuid";
 import { Engine, Events, IEventCollision } from "matter-js";
-import { Player } from "./objects/players";
+import { Player } from "./objects/player";
 import { Shell } from "./objects/shell";
 import { Explosion } from "./objects/explosion";
 import { GameMap, IGameMapState } from "./objects/gameMap";
-import { Global } from "./objects/global";
 import { EntityMap2 } from "./objects/EntityMap2";
 import { ISerializable } from "./objects/serializable";
+import { Color } from "../../imports/color";
+import { Sprite } from "./objects/sprite";
 
 export interface IGameState {
     players: {};
@@ -19,16 +20,20 @@ export class Game implements ISerializable {
     players = new EntityMap2<Player>();
     shells = new EntityMap2<Shell>();
     explosions = new EntityMap2<Explosion>();
+    colors = [Color.Green, Color.Blue, Color.Sand, Color.Red];
     map: GameMap;
+    engine: Engine;
 
-    constructor() {
-        Global.engine = Engine.create();
-        Global.engine.world.gravity.x = 0;
-        Global.engine.world.gravity.y = 0;
+    sprites: Sprite[] = [];
 
-        this.map = new GameMap(20, 20);
+    constructor(players: string[]) {
+        this.engine = Engine.create();
+        this.engine.world.gravity.x = 0;
+        this.engine.world.gravity.y = 0;
 
-        Global.engine.world.bounds = {
+        this.map = new GameMap(this, 20, 20);
+
+        this.engine.world.bounds = {
             min: {
                 x: 0,
                 y: 0,
@@ -39,53 +44,72 @@ export class Game implements ISerializable {
             },
         };
 
-        Events.on(Global.engine, "collisionStart", (event) => this.checkCollision(event));
-        Events.on(Global.engine, "collisionActive", (event) => this.checkCollision(event));
+        Events.on(this.engine, "collisionStart", (event) => this.checkCollision(event));
+        Events.on(this.engine, "collisionActive", (event) => this.checkCollision(event));
+
+        players.forEach((player) => this.createPlayer(player));
+    }
+
+    findSpriteByBody(body: Matter.Body) {
+        return this.sprites.filter((sprite) => sprite.body.id === body.id)[0];
     }
 
     createPlayer(id: string) {
-        this.players.set(id, new Player(id));
+        let color;
+        if (!this.players.has(id)) {
+            color = this.colors.pop();
+        } else {
+            color = this.players.get(id).color;
+        }
+        this.players.set(id, new Player(this, id, color));
     }
 
     removePlayer(id: string) {
-        this.players.delete(id);
+        const player = this.players.get(id);
+        if (player) {
+            this.colors.push(player.color);
+            this.players.delete(id);
+        }
     }
 
     moveTank(id: string, movement: any) {
         if (movement.input) {
-            const tank = this.players.get(id).tank;
-            switch (movement.input) {
-                case "right":
-                    tank.rotateRight();
-                    break;
-                case "left":
-                    tank.rotateLeft();
-                    break;
-                case "up":
-                    tank.forward();
-                    break;
-                case "down":
-                    tank.reverse();
-                    break;
-                case "fire":
-                    const shell = tank.fire();
-                    if (shell) {
-                        this.shells.set(v4(), shell);
-                    }
-                    break;
+            const player = this.players.get(id);
+            if (player.tank) {
+                const tank = player.tank;
+                switch (movement.input) {
+                    case "right":
+                        tank.rotateRight();
+                        break;
+                    case "left":
+                        tank.rotateLeft();
+                        break;
+                    case "up":
+                        tank.forward();
+                        break;
+                    case "down":
+                        tank.reverse();
+                        break;
+                    case "fire":
+                        const shell = tank.fire();
+                        if (shell) {
+                            this.shells.set(v4(), shell);
+                        }
+                        break;
+                }
             }
         }
     }
 
     update() {
-        Engine.update(Global.engine, 1000 / 60);
+        Engine.update(this.engine, 1000 / 60);
 
         this.explosions.forEach((explosion) => {
             explosion.update();
         });
 
         this.players.forEach((player) => {
-            player.tank.update();
+            player.update();
         });
 
         this.shells.forEach((shell) => {
@@ -95,7 +119,7 @@ export class Game implements ISerializable {
                 shell.destroy();
             }
             if (shell.destroyed) {
-                this.explosions.set(v4(), new Explosion(shell.body.position));
+                this.explosions.set(v4(), new Explosion(this, shell.body.position));
             }
         });
 
@@ -114,6 +138,12 @@ export class Game implements ISerializable {
                 this.explosions.delete(uuid);
             }
         });
+
+        this.players.forEach((player, uuid) => {
+            if (player.tank && player.tank.destroyed) {
+                player.tank = null;
+            }
+        });
     }
 
     toJSON(): IGameState {
@@ -125,14 +155,34 @@ export class Game implements ISerializable {
         };
     }
 
-    get state() {
-        return this.toJSON();
-    }
-
     checkCollision(event: IEventCollision<Engine>): any {
         event.pairs.forEach((pair) => {
-            Events.trigger(pair.bodyA, "collision");
-            Events.trigger(pair.bodyB, "collision");
+            Events.trigger(pair.bodyA, "collision", pair);
+            Events.trigger(pair.bodyB, "collision", pair);
         });
+    }
+
+    get alivePlayers() {
+        const alivePlayers: Player[] = [];
+        this.players.forEach((player) => {
+            if (player.tank) {
+                alivePlayers.push(player);
+            }
+        });
+
+        return alivePlayers;
+    }
+
+    get winner() {
+        if (this.isOver()) {
+            return this.alivePlayers[0];
+        }
+        return null;
+    }
+
+    isOver() {
+        if (this.alivePlayers.length === 1) {
+            return true;
+        }
     }
 }

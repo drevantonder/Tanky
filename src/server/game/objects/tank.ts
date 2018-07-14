@@ -4,8 +4,10 @@ import { Global } from "./global";
 import { Body, Vector, Bodies } from "matter-js";
 import { Constants } from "../../../imports/constants";
 import { deg2Rad } from "@gamestdio/mathf/lib";
+import { Game } from "../game";
+import { IDamageable } from "./IDamageable";
 
-export class Tank extends Sprite {
+export class Tank extends Sprite implements IDamageable {
 
     canFire: boolean;
     movementSpeed: number;
@@ -13,8 +15,10 @@ export class Tank extends Sprite {
     reloadSpeed: number;
     recoil: number;
     recoilResetTime: number;
+    health: number;
 
     constructor(
+        game: Game,
         position = Vector.create(300, 300),
         movementSpeed = Constants.TANK.DEFAULT_MOVEMENT_SPEED,
         rotateSpeed = Constants.TANK.DEFAULT_ROTATE_SPEED,
@@ -25,6 +29,7 @@ export class Tank extends Sprite {
         recoilResetTime = Constants.TANK.DEFULT_RECOIL_RESET_TIME) {
 
         super(
+            game,
             Bodies.rectangle(position.x, position.y, width, height, {
                 mass: Constants.TANK.DEFAULT_MASS,
                 frictionAir: 0.9,
@@ -32,6 +37,7 @@ export class Tank extends Sprite {
         );
 
         this.canFire = true;
+        this.health = 100;
         this.movementSpeed = movementSpeed;
         this.rotateSpeed = rotateSpeed;
         this.reloadSpeed = reloadSpeed;
@@ -69,6 +75,7 @@ export class Tank extends Sprite {
 
             // this.point = this.point.subtract(Vector.mult(this.vector, this.recoil));
             return new Shell(
+                this.game,
                 Vector.add(
                     this.body.position,
                     Vector.mult(this.vector, Constants.TANK.DEFAULT_WIDTH / 2 + Constants.SHELL.DEFAULT_WIDTH / 2),
@@ -82,5 +89,20 @@ export class Tank extends Sprite {
 
     reload() {
         this.canFire = true;
+    }
+
+    damage(amount) {
+        this.health -= amount;
+
+        if (this.health <= 0) {
+            this.destroy();
+        }
+    }
+
+    toJSON() {
+        return Object.assign({
+            health: this.health,
+            canFire: this.canFire,
+        }, super.toJSON());
     }
 }

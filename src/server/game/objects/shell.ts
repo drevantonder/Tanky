@@ -2,6 +2,8 @@ import { Tank } from "./tank";
 import { Sprite } from "./sprite";
 import { Bodies, Vector, Body } from "matter-js";
 import { Constants } from "../../../imports/constants";
+import { Game } from "../game";
+import { IDamageable, isDamageable } from "./IDamageable";
 
 export class Shell extends Sprite {
     tank: Tank;
@@ -12,6 +14,7 @@ export class Shell extends Sprite {
     distanceTraveled: number;
 
     constructor(
+        game: Game,
         position: Vector,
         angle: number,
         tank: Tank,
@@ -22,6 +25,7 @@ export class Shell extends Sprite {
         height = Constants.SHELL.DEFAULT_HEIGHT) {
 
         super(
+            game,
             Bodies.rectangle(position.x, position.y, width, height, {
                 mass: Constants.SHELL.DEFAULT_MASS,
                 angle,
@@ -34,12 +38,12 @@ export class Shell extends Sprite {
         this.range = range;
         this.distanceTraveled = 0;
 
-        Body.applyForce(this.body,
-            this.body.position,
-            Vector.mult(this.vector, this.speed));
+        Body.setVelocity(this.body, Vector.mult(this.vector, this.speed));
     }
 
     update() {
+        Body.setVelocity(this.body, Vector.mult(this.vector, this.speed));
+
         this.distanceTraveled += this.speed;
         if (this.distanceTraveled >= this.range) {
             this.destroy();
@@ -48,7 +52,10 @@ export class Shell extends Sprite {
         super.update();
     }
 
-    checkCollision(event) {
+    checkCollision(sprite: Sprite) {
+        if (isDamageable(sprite)) {
+            sprite.damage(this.damage);
+        }
         this.destroy();
     }
 }
