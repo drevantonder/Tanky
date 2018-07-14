@@ -6,7 +6,6 @@ import { Status } from "../imports/status";
 
 export default class WaitingScene extends Phaser.Scene {
   room: Room;
-  map: Phaser.Tilemaps.Tilemap;
   text: Phaser.GameObjects.Text;
 
   constructor() {

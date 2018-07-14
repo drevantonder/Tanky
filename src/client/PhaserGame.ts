@@ -4,6 +4,7 @@ import GameScene from "./gameScene";
 import WaitingScene from "./waitingScene";
 import { Room } from "colyseus.js";
 import { Status } from "../imports/status";
+import GameOverScene from "./gameOverScene";
 
 export default class PhaserGame extends Phaser.Game {
   constructor(room: Room) {
@@ -12,7 +13,7 @@ export default class PhaserGame extends Phaser.Game {
       width: window.innerWidth,
       height: window.innerHeight,
       autofocus: true,
-      scene: [WaitingScene, GameScene],
+      scene: [WaitingScene, GameScene, GameOverScene],
     };
 
     super(config);
@@ -23,9 +24,15 @@ export default class PhaserGame extends Phaser.Game {
       if (change.value === Status.Playing) {
         this.scene.start("game");
         this.scene.stop("waiting");
+        this.scene.stop("gameOver");
       } else if (change.value === Status.WaitingForMinPlayers || change.value === Status.WaitingForExtraPlayers) {
         this.scene.stop("game");
         this.scene.start("waiting");
+        this.scene.stop("gameOver");
+      } else if (change.value === Status.GameOver) {
+        this.scene.pause("game");
+        this.scene.start("gameOver");
+        this.scene.stop("waiting");
       }
     });
 

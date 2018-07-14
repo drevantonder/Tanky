@@ -30,4 +30,6 @@ export class Constants {
     static MIN_PLAYERS = 2;
     static MAX_PLAYERS = 4;
     static Font = "Muli";
+    static TIME_TO_WAIT_FOR_EXTRA_PLAYERS = 4000; // ms
+    static TIME_TO_WAIT_FOR_GAME_OVER = 2000;
 }

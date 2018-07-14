@@ -5,6 +5,9 @@ import { Status } from "../../imports/status";
 import { Constants } from "../../imports/constants";
 
 export class State {
+    static TIME_TO_WAIT_FOR_EXTRA_PLAYERS = Constants.TIME_TO_WAIT_FOR_EXTRA_PLAYERS;
+    static TIME_TO_WAIT_FOR_GAME_OVER = Constants.TIME_TO_WAIT_FOR_GAME_OVER;
+
     game: IGameState;
     status: Status = Status.WaitingForMinPlayers;
 
@@ -40,7 +43,7 @@ export class State {
 
         if (this.status !== Status.Playing && this.players.length >= Constants.MIN_PLAYERS) {
             this.status = Status.WaitingForExtraPlayers;
-            Global.clock.setTimeout(() => this.startGame(), 4000);
+            Global.clock.setTimeout(() => this.startGame(), State.TIME_TO_WAIT_FOR_EXTRA_PLAYERS);
         }
     }
 
@@ -69,7 +72,7 @@ export class State {
 
         this.status = Status.GameOver;
 
-        this.startGame();
+        Global.clock.setTimeout(() => this.startGame(), State.TIME_TO_WAIT_FOR_GAME_OVER);
     }
 }
 

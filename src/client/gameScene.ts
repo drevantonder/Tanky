@@ -30,43 +30,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.anims.create({
-        key: "explosion",
-        frames: [
-            { key: "explosion1", frame: 1 },
-            { key: "explosion2", frame: 2 },
-            { key: "explosion3", frame: 3 },
-            { key: "explosion4", frame: 4 },
-            { key: "explosion5", frame: 5 },
-        ],
-        repeat: 0,
-        duration: Constants.EXPLOSION.LENGTH,
-    });
-
     this.room = this.registry.get("room");
+
+    this.createAnimations();
 
     this.createMap();
 
-    this.players = new StateEntitiesManager<PlayerGameObject>(
-      this.room,
-      "game/players",
-      (value) => {
-      return new PlayerGameObject(this, value);
-    });
-
-    this.shells = new StateEntitiesManager<ShellSprite>(
-      this.room,
-      "game/shells",
-      (value) => {
-      return new ShellSprite(this, value);
-    });
-
-    this.explosions = new StateEntitiesManager<ExplosionSprite>(
-      this.room,
-      "game/explosions",
-      (value) => {
-      return new ExplosionSprite(this, value);
-    });
+    this.createStateEntitiesManagers();
 
     this.setCameraBounds();
 
@@ -126,5 +96,32 @@ export default class GameScene extends Phaser.Scene {
     layer.randomize(0, 0, this.map.width, this.map.height, [0, 10]);
 
     this.map.convertLayerToStatic(layer);
+  }
+
+  private createAnimations() {
+    this.anims.create({
+      key: "explosion",
+      frames: [
+        { key: "explosion1", frame: 1 },
+        { key: "explosion2", frame: 2 },
+        { key: "explosion3", frame: 3 },
+        { key: "explosion4", frame: 4 },
+        { key: "explosion5", frame: 5 },
+      ],
+      repeat: 0,
+      duration: Constants.EXPLOSION.LENGTH,
+    });
+  }
+
+  private createStateEntitiesManagers() {
+    this.players = new StateEntitiesManager<PlayerGameObject>(this.room, "game/players", (value) => {
+      return new PlayerGameObject(this, value);
+    });
+    this.shells = new StateEntitiesManager<ShellSprite>(this.room, "game/shells", (value) => {
+      return new ShellSprite(this, value);
+    });
+    this.explosions = new StateEntitiesManager<ExplosionSprite>(this.room, "game/explosions", (value) => {
+      return new ExplosionSprite(this, value);
+    });
   }
 }
