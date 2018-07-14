@@ -1590,11 +1590,11 @@ declare type GraphicsStyles = {
     /**
      * The style applied to shape outlines.
      */
-    lineStyle: GraphicsLineStyle;
+    lineStyle?: GraphicsLineStyle;
     /**
      * The style applied to shape areas.
      */
-    fillStyle: GraphicsFillStyle;
+    fillStyle?: GraphicsFillStyle;
 };
 
 /**

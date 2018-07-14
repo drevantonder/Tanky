@@ -1,5 +1,6 @@
 export enum Status {
-    WaitingForPlayers = 1,
+    WaitingForMinPlayers = 1,
     Playing,
     GameOver,
+    WaitingForExtraPlayers,
 }

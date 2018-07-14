@@ -65,8 +65,11 @@ export class Game implements ISerializable {
     }
 
     removePlayer(id: string) {
-        this.colors.push(this.players.get(id).color);
-        this.players.delete(id);
+        const player = this.players.get(id);
+        if (player) {
+            this.colors.push(player.color);
+            this.players.delete(id);
+        }
     }
 
     moveTank(id: string, movement: any) {

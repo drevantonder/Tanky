@@ -27,6 +27,14 @@ export class PlayerGameObject extends NetworkedGameObject {
     if (this.tank) {
       this.tank.update(time, delta);
     }
+
+    if (this.state.tank && !this.tank) {
+      this.tank = new TankSprite(this.scene, this.state.tank, this.state.color);
+
+      this.tank.stateGetter = () => {
+        return this.stateGetter().tank;
+      };
+    }
   }
 
   destroy() {

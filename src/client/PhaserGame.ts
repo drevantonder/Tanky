@@ -23,7 +23,7 @@ export default class PhaserGame extends Phaser.Game {
       if (change.value === Status.Playing) {
         this.scene.start("game");
         this.scene.stop("waiting");
-      } else if (change.value === Status.WaitingForPlayers) {
+      } else if (change.value === Status.WaitingForMinPlayers || change.value === Status.WaitingForExtraPlayers) {
         this.scene.stop("game");
         this.scene.start("waiting");
       }

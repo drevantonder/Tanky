@@ -6,7 +6,7 @@ import { Constants } from "../../imports/constants";
 
 export class State {
     game: IGameState;
-    status: Status = Status.WaitingForPlayers;
+    status: Status = Status.WaitingForMinPlayers;
 
     @nosync
     Game: Game;
@@ -34,12 +34,13 @@ export class State {
     createPlayer(id: string) {
         this.players.push(id);
 
-        if (this.Game) {
-            this.Game.createPlayer(id);
-        }
+        // if (this.Game) {
+        //     this.Game.createPlayer(id);
+        // }
 
         if (this.status !== Status.Playing && this.players.length >= Constants.MIN_PLAYERS) {
-            this.startGame();
+            this.status = Status.WaitingForExtraPlayers;
+            Global.clock.setTimeout(() => this.startGame(), 4000);
         }
     }
 
